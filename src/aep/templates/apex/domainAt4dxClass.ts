@@ -1,0 +1,24 @@
+export const domainAt4dxClass = `public inherited sharing class <%= it.implementationClassName %> extends ApplicationSObjectDomain implements <%= it.interfaceClassName %> {
+  public static <%= it.interfaceClassName %> newInstance(List<<%= it.apiName %>> records) {
+    return (<%= it.interfaceClassName %>) Application.Domain.newInstance(records);
+  }
+
+  public static <%= it.interfaceClassName %> newInstance(Set<Id> recordIds) {
+    return (<%= it.interfaceClassName %>) Application.Domain.newInstance(recordIds);
+  }
+
+  public <%= it.implementationClassName %>() {
+    super(new List<<%= it.apiName %>>());
+  }
+
+  public <%= it.implementationClassName %>(List<<%= it.apiName %>> records) {
+    super(records);
+  }
+
+  public class Constructor implements fflib_SObjectDomain.IConstructable {
+    public fflib_SObjectDomain construct(List<SObject> sObjectList) {
+      return new <%= it.implementationClassName %>(sObjectList);
+    }
+  }
+}
+`;

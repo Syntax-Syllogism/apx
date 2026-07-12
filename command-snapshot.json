@@ -1,0 +1,224 @@
+[
+    {
+        "alias": [],
+        "command": "apx:generate",
+        "flagAliases": [],
+        "flagChars": [
+            "a",
+            "b",
+            "d",
+            "o",
+            "p",
+            "r",
+            "s",
+            "u"
+        ],
+        "flags": [
+            "api-version",
+            "at4dx",
+            "binding-sequence",
+            "domain",
+            "dry-run",
+            "fflib",
+            "flags-dir",
+            "json",
+            "output-path",
+            "prefix",
+            "selector",
+            "sobject",
+            "target-org",
+            "unit-of-work"
+        ],
+        "plugin": "@syntax-syllogism/apx"
+    },
+    {
+        "alias": [],
+        "command": "apx:generate:action",
+        "flagAliases": [],
+        "flagChars": [
+            "a",
+            "c",
+            "p",
+            "s"
+        ],
+        "flags": [
+            "api-version",
+            "class-name",
+            "description",
+            "dry-run",
+            "flags-dir",
+            "json",
+            "order",
+            "output-path",
+            "process-name",
+            "sobject",
+            "trigger-operation"
+        ],
+        "plugin": "@syntax-syllogism/apx"
+    },
+    {
+        "alias": [],
+        "command": "apx:generate:criteria",
+        "flagAliases": [],
+        "flagChars": [
+            "a",
+            "c",
+            "p",
+            "s"
+        ],
+        "flags": [
+            "api-version",
+            "class-name",
+            "description",
+            "dry-run",
+            "flags-dir",
+            "json",
+            "order",
+            "output-path",
+            "process-name",
+            "sobject",
+            "trigger-operation"
+        ],
+        "plugin": "@syntax-syllogism/apx"
+    },
+    {
+        "alias": [],
+        "command": "apx:generate:domain",
+        "flagAliases": [],
+        "flagChars": [
+            "a",
+            "o",
+            "p",
+            "s"
+        ],
+        "flags": [
+            "api-version",
+            "at4dx",
+            "dry-run",
+            "fflib",
+            "flags-dir",
+            "json",
+            "output-path",
+            "prefix",
+            "sobject",
+            "target-org"
+        ],
+        "plugin": "@syntax-syllogism/apx"
+    },
+    {
+        "alias": [],
+        "command": "apx:generate:selector",
+        "flagAliases": [],
+        "flagChars": [
+            "a",
+            "o",
+            "p",
+            "s"
+        ],
+        "flags": [
+            "api-version",
+            "at4dx",
+            "dry-run",
+            "fflib",
+            "flags-dir",
+            "json",
+            "output-path",
+            "prefix",
+            "sobject",
+            "target-org"
+        ],
+        "plugin": "@syntax-syllogism/apx"
+    },
+    {
+        "alias": [],
+        "command": "apx:generate:selector:field-injection",
+        "flagAliases": [],
+        "flagChars": [
+            "p",
+            "s"
+        ],
+        "flags": [
+            "description",
+            "dry-run",
+            "fields",
+            "fieldset-name",
+            "flags-dir",
+            "json",
+            "label",
+            "output-path",
+            "sobject"
+        ],
+        "plugin": "@syntax-syllogism/apx"
+    },
+    {
+        "alias": [],
+        "command": "apx:generate:selector:method",
+        "flagAliases": [],
+        "flagChars": [
+            "a",
+            "c",
+            "p",
+            "s"
+        ],
+        "flags": [
+            "api-version",
+            "class-name",
+            "dry-run",
+            "flags-dir",
+            "json",
+            "output-path",
+            "sobject",
+            "sobject-selector-class-name"
+        ],
+        "plugin": "@syntax-syllogism/apx"
+    },
+    {
+        "alias": [],
+        "command": "apx:generate:service",
+        "flagAliases": [],
+        "flagChars": [
+            "a",
+            "o",
+            "p"
+        ],
+        "flags": [
+            "api-version",
+            "at4dx",
+            "dry-run",
+            "fflib",
+            "flags-dir",
+            "json",
+            "output-path",
+            "prefix",
+            "service-basename",
+            "target-org"
+        ],
+        "plugin": "@syntax-syllogism/apx"
+    },
+    {
+        "alias": [],
+        "command": "apx:generate:unitofwork",
+        "flagAliases": [],
+        "flagChars": [
+            "a",
+            "b",
+            "o",
+            "p",
+            "s"
+        ],
+        "flags": [
+            "api-version",
+            "at4dx",
+            "binding-sequence",
+            "dry-run",
+            "fflib",
+            "flags-dir",
+            "json",
+            "output-path",
+            "prefix",
+            "sobject",
+            "target-org"
+        ],
+        "plugin": "@syntax-syllogism/apx"
+    }
+]

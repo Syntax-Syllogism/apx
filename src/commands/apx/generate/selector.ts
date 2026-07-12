@@ -1,0 +1,62 @@
+import { Messages } from '@salesforce/core';
+import { SfCommand } from '@salesforce/sf-plugins-core';
+import { describeTarget, resolveOutputBase } from '../../../aep/commandSupport.js';
+import { GenerationEngine } from '../../../aep/engine/engine.js';
+import {
+  apiVersionFlag,
+  at4dxFlag,
+  dryRunFlag,
+  fflibFlag,
+  outputPathFlag,
+  prefixFlag,
+  resolveFlavor,
+  sobjectFlag,
+  targetOrgFlag,
+} from '../../../aep/flags.js';
+import type { AepCommandResult, GenerationManifest } from '../../../aep/model/types.js';
+import { buildSObjectNames } from '../../../aep/naming/naming.js';
+import { PathResolver } from '../../../aep/paths/paths.js';
+import { buildSelectorPlan } from '../../../aep/plan/planBuilders.js';
+
+Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
+const messages = Messages.loadMessages('@syntax-syllogism/apx', 'apx.generate.selector');
+
+export default class ApxGenerateSelector extends SfCommand<AepCommandResult> {
+  public static readonly summary = messages.getMessage('summary');
+  public static readonly description = messages.getMessage('description');
+  public static readonly examples = messages.getMessages('examples');
+  public static readonly flags = {
+    'target-org': targetOrgFlag,
+    sobject: sobjectFlag,
+    at4dx: at4dxFlag,
+    fflib: fflibFlag,
+    'api-version': apiVersionFlag,
+    'output-path': outputPathFlag,
+    prefix: prefixFlag,
+    'dry-run': dryRunFlag,
+  };
+
+  public async run(): Promise<AepCommandResult> {
+    const { flags } = await this.parse(ApxGenerateSelector);
+    const flavor = resolveFlavor(flags);
+    const { view, apiVersion } = await describeTarget(flags['target-org'], flags['api-version'], flags.sobject);
+    const names = buildSObjectNames({ apiName: view.apiName, isCustom: view.isCustom, prefix: flags.prefix });
+    const plan = buildSelectorPlan({
+      names,
+      view,
+      flavor,
+      apiVersion,
+      paths: new PathResolver(),
+      includeBinding: flavor === 'at4dx',
+    });
+    const baseDir = await resolveOutputBase(flags['output-path']);
+    const manifest: GenerationManifest = await GenerationEngine.execute(plan, {
+      baseDir,
+      overwrite: 'overwrite',
+      dryRun: flags['dry-run'],
+    });
+    if (!this.jsonEnabled())
+      this.log(messages.getMessage('info.created', [manifest.created.length, manifest.skipped.length]));
+    return { baseDir, created: manifest.created, skipped: manifest.skipped, wouldCreate: manifest.wouldCreate };
+  }
+}
