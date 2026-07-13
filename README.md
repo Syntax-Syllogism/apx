@@ -23,6 +23,13 @@ sf apx generate selector --target-org myOrg --sobject Account --fflib
 sf apx generate --target-org myOrg --sobject Account --at4dx
 ```
 
+## Documentation
+
+* [Getting started](docs/getting-started.md)
+* [Command details](docs/command-details.md) — flavor selection, naming/prefix
+  rules, binding sequence, domain-process metadata, dry-run/overwrite semantics.
+* [Example `--json` output](docs/examples/generate-selector-output.json)
+
 ## Issues
 
 Please report any issues at <https://github.com/Syntax-Syllogism/apx/issues>.
@@ -123,7 +130,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.0/src/commands/apx/generate.ts)_
+_See code: [src/commands/apx/generate.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.1/src/commands/apx/generate.ts)_
 
 ## `sf apx generate action`
 
@@ -168,7 +175,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/action.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.0/src/commands/apx/generate/action.ts)_
+_See code: [src/commands/apx/generate/action.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.1/src/commands/apx/generate/action.ts)_
 
 ## `sf apx generate criteria`
 
@@ -213,7 +220,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/criteria.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.0/src/commands/apx/generate/criteria.ts)_
+_See code: [src/commands/apx/generate/criteria.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.1/src/commands/apx/generate/criteria.ts)_
 
 ## `sf apx generate domain`
 
@@ -254,7 +261,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/domain.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.0/src/commands/apx/generate/domain.ts)_
+_See code: [src/commands/apx/generate/domain.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.1/src/commands/apx/generate/domain.ts)_
 
 ## `sf apx generate selector`
 
@@ -299,7 +306,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/selector.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.0/src/commands/apx/generate/selector.ts)_
+_See code: [src/commands/apx/generate/selector.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.1/src/commands/apx/generate/selector.ts)_
 
 ## `sf apx generate selector field-injection`
 
@@ -334,7 +341,7 @@ EXAMPLES
     $ sf apx generate selector field-injection -s Account --fields Name,Industry
 ```
 
-_See code: [src/commands/apx/generate/selector/field-injection.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.0/src/commands/apx/generate/selector/field-injection.ts)_
+_See code: [src/commands/apx/generate/selector/field-injection.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.1/src/commands/apx/generate/selector/field-injection.ts)_
 
 ## `sf apx generate selector method`
 
@@ -375,7 +382,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/selector/method.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.0/src/commands/apx/generate/selector/method.ts)_
+_See code: [src/commands/apx/generate/selector/method.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.1/src/commands/apx/generate/selector/method.ts)_
 
 ## `sf apx generate service`
 
@@ -416,7 +423,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/service.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.0/src/commands/apx/generate/service.ts)_
+_See code: [src/commands/apx/generate/service.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.1/src/commands/apx/generate/service.ts)_
 
 ## `sf apx generate unitofwork`
 
@@ -458,5 +465,5 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/unitofwork.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.0/src/commands/apx/generate/unitofwork.ts)_
+_See code: [src/commands/apx/generate/unitofwork.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.1/src/commands/apx/generate/unitofwork.ts)_
 <!-- commandsstop -->
