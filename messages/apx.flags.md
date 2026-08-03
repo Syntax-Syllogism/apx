@@ -86,6 +86,26 @@ Include unit-of-work artifacts in aggregate generation.
 
 Render and validate generation output without writing files.
 
+# flags.classes.summary
+
+Find Apex classes that have no inbound metadata dependencies.
+
+# flags.destructive-manifest.summary
+
+Write a destructive-changes manifest for the classes found. Does not modify the org.
+
+# flags.dead-only.summary
+
+Limit the manifest to unreferenced classes, excluding test-only classes and their tests.
+
+# flags.include-suppressed.summary
+
+Also report classes suppressed as entry points, test classes, or DI-bound.
+
+# flags.ignore.summary
+
+Class-name pattern to exclude from results. Supports `*`. Repeatable.
+
 # error.invalidOrder
 
 `--order` must be a decimal-like value such as `10.1` or `10.2`.

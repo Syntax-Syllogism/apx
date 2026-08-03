@@ -28,7 +28,8 @@ sf apx generate --target-org myOrg --sobject Account --at4dx
 * [Getting started](docs/getting-started.md)
 * [Command details](docs/command-details.md) — flavor selection, naming/prefix
   rules, binding sequence, domain-process metadata, dry-run/overwrite semantics.
-* [Example `--json` output](docs/examples/generate-selector-output.json)
+* [Dead-code analysis](docs/dead-code.md) — dependency analysis, suppression rules,
+  classification buckets, and destructive-manifest safety.
 
 ## Issues
 
@@ -57,11 +58,11 @@ git clone git@github.com:Syntax-Syllogism/apx
 yarn && yarn build
 ```
 
-To use your plugin, run using the local `./bin/dev.js` file.
+To use your plugin locally, invoke the `./bin/dev.js` file through Node.
 
 ```bash
 # Run using local run file.
-./bin/dev.js apx generate domain --help
+node ./bin/dev.js apx generate domain --help
 ```
 
 There should be no differences when running via the Salesforce CLI or using the local run file. However, it can be useful to link the plugin to do some additional testing or run your commands from anywhere on your machine.
@@ -76,6 +77,7 @@ sf plugins
 ## Commands
 
 <!-- commands -->
+* [`sf apx dead`](#sf-apx-dead)
 * [`sf apx generate`](#sf-apx-generate)
 * [`sf apx generate action`](#sf-apx-generate-action)
 * [`sf apx generate criteria`](#sf-apx-generate-criteria)
@@ -85,6 +87,81 @@ sf plugins
 * [`sf apx generate selector method`](#sf-apx-generate-selector-method)
 * [`sf apx generate service`](#sf-apx-generate-service)
 * [`sf apx generate unitofwork`](#sf-apx-generate-unitofwork)
+
+## `sf apx dead`
+
+Find Apex classes in an org that nothing references.
+
+```
+USAGE
+  $ sf apx dead -o <value> [--json] [--flags-dir <value>] [-c] [--dead-only --destructive-manifest]
+    [--include-suppressed] [--ignore <value>...] [-a <value>] [-p <value>] [--dry-run]
+
+FLAGS
+  -a, --api-version=<value>   Override the API version used for the org connection.
+  -c, --classes               Find Apex classes that have no inbound metadata dependencies.
+  -o, --target-org=<value>    (required) Target org username or alias.
+  -p, --output-path=<value>   [default: generated-files] Output folder relative to the Salesforce project root.
+      --dead-only             Limit the manifest to unreferenced classes, excluding test-only classes and their tests.
+      --destructive-manifest  Write a destructive-changes manifest for the classes found. Does not modify the org.
+      --dry-run               Render and validate generation output without writing files.
+      --ignore=<value>...     Class-name pattern to exclude from results. Supports `*`. Repeatable.
+      --include-suppressed    Also report classes suppressed as entry points, test classes, or DI-bound.
+
+GLOBAL FLAGS
+  --flags-dir=<value>  Import flag values from a directory.
+  --json               Format output as json.
+
+DESCRIPTION
+  Find Apex classes in an org that nothing references.
+
+  Uses the Tooling API Dependency API (MetadataComponentDependency) to find unmanaged Apex
+  classes with no inbound metadata references.
+
+  AT4DX dependency-injection bindings are resolved: classes named in
+  ApplicationFactory_ServiceBinding__mdt, ApplicationFactory_SelectorBinding__mdt,
+  ApplicationFactory_DomainBinding__mdt, or DomainProcessBinding__mdt are treated as live,
+  because nothing references an injected implementation directly. Implementations with no
+  binding are still reported, which is usually what you are looking for.
+
+  Analysis repeats over the surviving graph until nothing new becomes dead, so an entire
+  abandoned subsystem is found in one run; the round each class was found in is reported.
+
+  Classes referenced only by their own tests are paired with those tests so both are removed
+  together. When a test also covers surviving code, the class and its test are both retained
+  and reported, because removing the class without its test would break the deployment.
+
+  Recognised entry points (@AuraEnabled, @InvocableMethod, @RestResource, global,
+  webservice, Batchable, Schedulable, Queueable) and test classes are suppressed by default.
+
+  Class names held as strings outside the known binding objects -- Type.forName,
+  System.schedule from anonymous Apex, bespoke config tables -- remain invisible. Always
+  review results before deploying a destructive change.
+
+EXAMPLES
+  List classes nothing references:
+
+    $ sf apx dead --target-org myOrg --classes
+
+  Include suppressed entry points and DI-bound classes in the report:
+
+    $ sf apx dead --target-org myOrg --classes --include-suppressed
+
+  Write a destructive manifest for the dead classes and their tests:
+
+    $ sf apx dead --target-org myOrg --classes --destructive-manifest
+
+  Write a manifest for unreferenced classes only, excluding test-only groups:
+
+    $ sf apx dead --target-org myOrg --classes --destructive-manifest --dead-only
+
+FLAG DESCRIPTIONS
+  -a, --api-version=<value>  Override the API version used for the org connection.
+
+    Override the api version used for api requests made by this command
+```
+
+_See code: [src/commands/apx/dead.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.0/src/commands/apx/dead.ts)_
 
 ## `sf apx generate`
 
@@ -130,7 +207,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.2/src/commands/apx/generate.ts)_
+_See code: [src/commands/apx/generate.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.0/src/commands/apx/generate.ts)_
 
 ## `sf apx generate action`
 
@@ -175,7 +252,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/action.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.2/src/commands/apx/generate/action.ts)_
+_See code: [src/commands/apx/generate/action.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.0/src/commands/apx/generate/action.ts)_
 
 ## `sf apx generate criteria`
 
@@ -220,7 +297,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/criteria.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.2/src/commands/apx/generate/criteria.ts)_
+_See code: [src/commands/apx/generate/criteria.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.0/src/commands/apx/generate/criteria.ts)_
 
 ## `sf apx generate domain`
 
@@ -261,7 +338,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/domain.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.2/src/commands/apx/generate/domain.ts)_
+_See code: [src/commands/apx/generate/domain.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.0/src/commands/apx/generate/domain.ts)_
 
 ## `sf apx generate selector`
 
@@ -306,7 +383,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/selector.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.2/src/commands/apx/generate/selector.ts)_
+_See code: [src/commands/apx/generate/selector.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.0/src/commands/apx/generate/selector.ts)_
 
 ## `sf apx generate selector field-injection`
 
@@ -341,7 +418,7 @@ EXAMPLES
     $ sf apx generate selector field-injection -s Account --fields Name,Industry
 ```
 
-_See code: [src/commands/apx/generate/selector/field-injection.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.2/src/commands/apx/generate/selector/field-injection.ts)_
+_See code: [src/commands/apx/generate/selector/field-injection.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.0/src/commands/apx/generate/selector/field-injection.ts)_
 
 ## `sf apx generate selector method`
 
@@ -373,7 +450,7 @@ DESCRIPTION
 EXAMPLES
   Generate selector method scaffolding:
 
-    $ sf apx generate selector method -c SelectBySloganMethod --sobject-selector-class-name AccountsSelector -s ^
+    $ sf apx generate selector method -c SelectBySloganMethod --sobject-selector-class-name AccountsSelector -s \
       Account
 
 FLAG DESCRIPTIONS
@@ -382,7 +459,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/selector/method.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.2/src/commands/apx/generate/selector/method.ts)_
+_See code: [src/commands/apx/generate/selector/method.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.0/src/commands/apx/generate/selector/method.ts)_
 
 ## `sf apx generate service`
 
@@ -423,7 +500,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/service.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.2/src/commands/apx/generate/service.ts)_
+_See code: [src/commands/apx/generate/service.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.0/src/commands/apx/generate/service.ts)_
 
 ## `sf apx generate unitofwork`
 
@@ -465,5 +542,5 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/unitofwork.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.1.2/src/commands/apx/generate/unitofwork.ts)_
+_See code: [src/commands/apx/generate/unitofwork.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.0/src/commands/apx/generate/unitofwork.ts)_
 <!-- commandsstop -->

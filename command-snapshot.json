@@ -1,6 +1,31 @@
 [
     {
         "alias": [],
+        "command": "apx:dead",
+        "flagAliases": [],
+        "flagChars": [
+            "a",
+            "c",
+            "o",
+            "p"
+        ],
+        "flags": [
+            "api-version",
+            "classes",
+            "dead-only",
+            "destructive-manifest",
+            "dry-run",
+            "flags-dir",
+            "ignore",
+            "include-suppressed",
+            "json",
+            "output-path",
+            "target-org"
+        ],
+        "plugin": "@syntax-syllogism/apx"
+    },
+    {
+        "alias": [],
         "command": "apx:generate",
         "flagAliases": [],
         "flagChars": [

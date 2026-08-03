@@ -132,4 +132,31 @@ export const dryRunFlag = Flags.boolean({
   summary: messages.getMessage('flags.dry-run.summary'),
 });
 
+export const classesFlag = Flags.boolean({
+  char: 'c',
+  default: false,
+  summary: messages.getMessage('flags.classes.summary'),
+});
+
+export const destructiveManifestFlag = Flags.boolean({
+  default: false,
+  summary: messages.getMessage('flags.destructive-manifest.summary'),
+});
+
+export const deadOnlyFlag = Flags.boolean({
+  default: false,
+  summary: messages.getMessage('flags.dead-only.summary'),
+  dependsOn: ['destructive-manifest'],
+});
+
+export const includeSuppressedFlag = Flags.boolean({
+  default: false,
+  summary: messages.getMessage('flags.include-suppressed.summary'),
+});
+
+export const ignoreFlag = Flags.string({
+  multiple: true,
+  summary: messages.getMessage('flags.ignore.summary'),
+});
+
 export const resolveFlavor = (flags: { at4dx?: boolean; fflib?: boolean }): Flavor => (flags.fflib ? 'fflib' : 'at4dx');

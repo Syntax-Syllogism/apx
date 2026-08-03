@@ -16,7 +16,7 @@ Or build from source (see [Contributing](../README.md#contributing)):
 git clone git@github.com:jprichter/apx
 cd apx
 yarn && yarn build
-./bin/dev.js apx generate --help
+node ./bin/dev.js apx generate --help
 ```
 
 ## Concepts
@@ -92,7 +92,5 @@ build the binding's developer name.
 + [Command details](command-details.md) — flavor selection, naming/prefix
   rules, binding sequence, domain-process metadata, dry-run/overwrite
   semantics.
-+ [Example `--json` output](examples/generate-selector-output.json) — what a
-  successful `--json` run looks like.
 + Full CLI reference: see the [Commands](../README.md#commands) section of
   the README, or run any command with `--help`.

@@ -114,9 +114,6 @@ Every command returns `{ baseDir, created, skipped, wouldCreate? }` (plus
   targeting the same file within one command invocation is a hard error,
   not a silent last-write-wins.
 
-See [`examples/generate-selector-output.json`](examples/generate-selector-output.json)
-for a full `--json` result from a real run.
-
 ## Describe and API version resolution
 
 Any command that takes `--target-org` describes the SObject once per
