@@ -1,7 +1,7 @@
 {
   "name": "@syntax-syllogism/apx",
   "description": "a sf cli plugin for Apex Enterprise Patterns (fflib/at4dx) code generation",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "packageManager": "yarn@1.22.22",
   "repository": {
     "type": "git",
