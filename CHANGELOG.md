@@ -4,7 +4,9 @@
 
 ### Changed
 
-- Internal maintenance and tooling updates
+- add for dependency-based Apex dead-code analysis
+- resolve AT4DX bindings, entry points, test-only groups, cascades, and destructive manifests
+- add regression coverage and focused agent/dead-code documentation
 
 ## [0.1.1] - 2026-07-13
 
