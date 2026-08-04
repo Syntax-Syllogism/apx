@@ -15,5 +15,5 @@ and AT4DX) code and finding Apex classes with no known inbound references.
 - [Dead-code analysis](dead-code.md) — review dependency analysis results and
   produce safe destructive manifests.
 
-For the complete flag reference, see the [README command reference](https://github.com/Syntax-Syllogism/apx/blob/v0.2.3/README.md#commands)
+For the complete flag reference, see the [README command reference](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/README.md#commands)
 or run any command with `--help`.

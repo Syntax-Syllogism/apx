@@ -13,7 +13,7 @@ from a described SObject. This guide walks through your first generation run.
 sf plugins install @syntax-syllogism/apx@x.y.z
 ```
 
-Or build from source (see [Contributing](https://github.com/Syntax-Syllogism/apx/blob/v0.2.3/README.md#contributing)):
+Or build from source (see [Contributing](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/README.md#contributing)):
 
 ```bash
 git clone git@github.com:jprichter/apx
@@ -96,5 +96,5 @@ build the binding's developer name.
 + [Command details](command-details.md) — flavor selection, naming/prefix
   rules, binding sequence, domain-process metadata, dry-run/overwrite
   semantics.
-+ Full CLI reference: see the [Commands](https://github.com/Syntax-Syllogism/apx/blob/v0.2.3/README.md#commands) section of
++ Full CLI reference: see the [Commands](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/README.md#commands) section of
   the README, or run any command with `--help`.

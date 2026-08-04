@@ -1,5 +1,13 @@
 # Changelog
 
+Based on the git status shown in the system reminder, the only commit since v0.2.3 is `49d54df chore: bump docs-theme`, which is internal maintenance noise. According to your rules, when every commit is noise, I should output:
+
+## [0.2.4] - 2026-08-04
+
+### Changed
+
+- Internal maintenance and tooling updates
+
 ## [0.2.3] - 2026-08-04
 
 ### Changed
