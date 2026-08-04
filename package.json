@@ -1,7 +1,7 @@
 {
   "name": "@syntax-syllogism/apx",
   "description": "a sf cli plugin for Apex Enterprise Patterns (fflib/at4dx) code generation",
-  "version": "0.2.2",
+  "version": "0.2.3",
   "packageManager": "yarn@1.22.22",
   "repository": {
     "type": "git",
@@ -90,7 +90,7 @@
     "format": "wireit",
     "link-check": "wireit",
     "lint": "wireit",
-    "lint:md": "markdownlint-cli2 \"./**/*.md\"",
+    "lint:md": "markdownlint-cli2 \"./**/*.md\" \"#docs-site/node_modules/**\" \"#docs-site/dist/**\" \"#docs-site/.astro/**\"",
     "lint:md:fix": "markdownlint-cli2 --fix \"./**/*.md\"",
     "postpack": "sf-clean --ignore-signing-artifacts",
     "prepack": "sf-prepack",

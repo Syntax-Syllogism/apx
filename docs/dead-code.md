@@ -1,4 +1,7 @@
-# Dead-code analysis
+---
+title: Dead-code analysis
+description: Find unreferenced Apex classes safely before removing them.
+---
 
 `sf apx dead` analyzes active, unmanaged Apex classes in an org and reports classes with
 no known inbound references. It is an inventory and review aid; it does not delete or
@@ -27,8 +30,10 @@ support `*` and match the complete class name. The command also accepts `--api-v
    `ApplicationFactory_DomainBinding__mdt`, and `DomainProcessBinding__mdt`.
 4. It suppresses recognized entry points and test classes from classification. Recognized
    entry points include REST resources, global classes, annotated or webservice methods,
-   and supported Batchable, Schedulable, Queueable, Callable, messaging, and platform-event
-   interfaces.
+   and supported `Database.Batchable`, `System.Schedulable`, `System.Queueable`,
+   `Messaging.InboundEmailHandler`, `System.Callable`, `Process.Plugin`,
+   `Auth.RegistrationHandler`, `Database.RaisesPlatformEvents`, `System.Comparator`,
+   `Iterable`, and `Iterator` interfaces.
 5. It repeatedly removes zero-inbound classes. It also identifies orphaned dependency
    cycles and groups classes referenced only by their own tests.
 

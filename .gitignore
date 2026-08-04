@@ -2,6 +2,7 @@
 tmp/
 # use yarn by default, so ignore npm
 package-lock.json
+!docs-site/package-lock.json
 
 # never checkin npm config
 .npmrc
@@ -41,6 +42,9 @@ oclif.lock
 .eslintcache
 .wireit
 node_modules
+docs-site/node_modules/
+docs-site/dist/
+docs-site/.astro/
 
 # --
 # put files here you don't want cleaned with sf-clean

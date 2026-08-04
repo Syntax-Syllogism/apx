@@ -1,4 +1,7 @@
-# Getting started with apx
+---
+title: Getting started with APX
+description: Install APX and generate Apex Enterprise Patterns code.
+---
 
 `apx` is a Salesforce CLI plugin that generates Apex Enterprise Patterns
 (fflib/at4dx) code — Domain, Selector, Service, and Unit of Work artifacts —
@@ -10,7 +13,7 @@ from a described SObject. This guide walks through your first generation run.
 sf plugins install @syntax-syllogism/apx@x.y.z
 ```
 
-Or build from source (see [Contributing](../README.md#contributing)):
+Or build from source (see [Contributing](https://github.com/Syntax-Syllogism/apx/blob/v0.2.3/README.md#contributing)):
 
 ```bash
 git clone git@github.com:jprichter/apx
@@ -21,17 +24,18 @@ node ./bin/dev.js apx generate --help
 
 ## Concepts
 
-Every `apx generate` command needs two things:
+Most org-backed `apx generate` commands need two things:
 
 1. **A flavor** — exactly one of `--at4dx` or `--fflib`. These are mutually
    exclusive; you must pick one. The flavor selects which template set is
    rendered (interface/implementation shape, binding metadata format, base
    class references) for every artifact the command produces.
-2. **A target** — most commands describe a live SObject via `--target-org`
-   + `--sobject` to pull real field names and custom/standard-object status.
-   A few commands (`action`, `criteria`, `selector method`,
-   `selector field-injection`) work entirely offline and don't need an org
-   connection at all — they only need the SObject API name as a string.
+2. **A target** — org-backed commands describe a live SObject via
+   `--target-org` + `--sobject` to pull real field names and
+   custom/standard-object status. The AT4DX-only `action`, `criteria`,
+   `selector method`, and `selector field-injection` commands work offline
+   with an SObject API name as a string. `service` also works offline, using
+   `--service-basename` instead of an SObject target.
 
 All commands support `--dry-run` (render and validate without writing files)
 and `--output-path` (defaults to `generated-files`, relative to the Salesforce
@@ -92,5 +96,5 @@ build the binding's developer name.
 + [Command details](command-details.md) — flavor selection, naming/prefix
   rules, binding sequence, domain-process metadata, dry-run/overwrite
   semantics.
-+ Full CLI reference: see the [Commands](../README.md#commands) section of
++ Full CLI reference: see the [Commands](https://github.com/Syntax-Syllogism/apx/blob/v0.2.3/README.md#commands) section of
   the README, or run any command with `--help`.
