@@ -86,6 +86,22 @@ Include unit-of-work artifacts in aggregate generation.
 
 Render and validate generation output without writing files.
 
+# flags.interactive.summary
+
+Prompt for generation flag values interactively.
+
+# error.interactiveTty
+
+Interactive mode requires an interactive terminal; pass flags instead when running non-interactively.
+
+# interactive.summary
+
+Resolved values:
+
+# interactive.declined
+
+Generation cancelled; no files were written.
+
 # flags.classes.summary
 
 Find Apex classes that have no inbound metadata dependencies.

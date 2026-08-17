@@ -2,9 +2,13 @@ import { Messages, SfError } from '@salesforce/core';
 import { SfCommand } from '@salesforce/sf-plugins-core';
 import {
   DEFAULT_API_VERSION,
+  assertInteractiveTty,
   isValidOrderValue,
   isWithinCustomMetadataNameLimit,
   resolveOutputBase,
+  requireFlagValue,
+  resolveFlagsInteractively,
+  resolveProjectApiVersion,
 } from '../../../aep/commandSupport.js';
 import { GenerationEngine } from '../../../aep/engine/engine.js';
 import {
@@ -12,12 +16,14 @@ import {
   classNameFlag,
   descriptionFlag,
   dryRunFlag,
+  interactiveFlag,
   orderFlag,
   outputPathFlag,
   processNameFlag,
   sobjectFlag,
   triggerOperationFlag,
 } from '../../../aep/flags.js';
+import { promptBoolean, promptOptionalText, promptText, promptTriggerOperation } from '../../../aep/prompting.js';
 import type { AepCommandResult } from '../../../aep/model/types.js';
 import { buildCriteriaNames, domainProcessBindingDeveloperName } from '../../../aep/naming/naming.js';
 import { PathResolver } from '../../../aep/paths/paths.js';
@@ -40,14 +46,47 @@ export default class ApxGenerateCriteria extends SfCommand<AepCommandResult> {
     'api-version': apiVersionFlag,
     'output-path': outputPathFlag,
     'dry-run': dryRunFlag,
+    interactive: interactiveFlag,
   };
 
   public async run(): Promise<AepCommandResult> {
-    const { flags } = await this.parse(ApxGenerateCriteria);
+    const parsed = await this.parse(ApxGenerateCriteria);
+    assertInteractiveTty(Boolean(parsed.flags.interactive));
+    let flags = parsed.flags;
+    if (flags.interactive) {
+      const resolved = await resolveFlagsInteractively(
+        parsed,
+        [
+          { key: 'sobject', prompt: async () => requireFlagValue(await promptText('SObject API name'), '--sobject') },
+          { key: 'class-name', prompt: async () => requireFlagValue(await promptText('Class name'), '--class-name') },
+          { key: 'trigger-operation', prompt: promptTriggerOperation },
+          { key: 'order', prompt: () => promptText('Order', flags.order ?? '10.1') },
+          { key: 'process-name', prompt: () => promptOptionalText('Process name', flags['process-name']) },
+          { key: 'description', prompt: () => promptOptionalText('Description', flags.description) },
+          {
+            key: 'api-version',
+            prompt: async () => promptOptionalText('API version', await resolveProjectApiVersion()),
+          },
+          { key: 'output-path', prompt: () => promptText('Output path', flags['output-path']) },
+          { key: 'dry-run', prompt: () => promptBoolean('Dry run', Boolean(flags['dry-run'])) },
+        ],
+        {
+          log: (message) => this.log(message),
+          confirm: () => this.confirm({ message: 'Generate with these values?', defaultAnswer: false }),
+        }
+      );
+      flags = resolved.flags;
+      if (!resolved.confirmed) {
+        const baseDir = await resolveOutputBase(requireFlagValue(flags['output-path'], '--output-path'));
+        return { baseDir, created: [], skipped: [] };
+      }
+    }
+    requireFlagValue(flags.sobject, '--sobject');
+    requireFlagValue(flags['class-name'], '--class-name');
     const order = flags.order ?? '10.1';
     if (!isValidOrderValue(order)) throw new SfError(messages.getMessage('error.invalidOrder'));
     const bindingDeveloperName = domainProcessBindingDeveloperName({
-      className: flags['class-name'],
+      className: requireFlagValue(flags['class-name'], '--class-name'),
       processName: flags['process-name'],
       order,
       type: 'Criteria',
@@ -55,8 +94,8 @@ export default class ApxGenerateCriteria extends SfCommand<AepCommandResult> {
     if (!isWithinCustomMetadataNameLimit(bindingDeveloperName))
       throw new SfError(messages.getMessage('error.bindingNameTooLong', [bindingDeveloperName]));
     const names = buildCriteriaNames({
-      className: flags['class-name'],
-      sobjectApiName: flags.sobject,
+      className: requireFlagValue(flags['class-name'], '--class-name'),
+      sobjectApiName: requireFlagValue(flags.sobject, '--sobject'),
       processName: flags['process-name'],
       order,
     });
@@ -69,7 +108,7 @@ export default class ApxGenerateCriteria extends SfCommand<AepCommandResult> {
       description: flags.description ?? `Review generated criteria binding for ${names.className}.`,
       paths: new PathResolver(),
     });
-    const baseDir = await resolveOutputBase(flags['output-path']);
+    const baseDir = await resolveOutputBase(requireFlagValue(flags['output-path'], '--output-path'));
     const manifest = await GenerationEngine.execute(plan, {
       baseDir,
       overwrite: 'overwrite',

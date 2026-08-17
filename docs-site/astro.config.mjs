@@ -30,7 +30,7 @@ export default defineConfig({
           toolSlug: 'apx',
           publicRepo: 'Syntax-Syllogism/apx',
         }),
-        sidebar: ['index', 'getting-started', 'command-details', 'dead-code'],
+        sidebar: ['index', 'getting-started', 'interactive-mode', 'command-details', 'dead-code'],
       },
     ),
     starlightLinksValidator(),

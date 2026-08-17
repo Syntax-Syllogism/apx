@@ -4,20 +4,25 @@ description: Naming, flavor, and metadata rules for APX generation commands.
 ---
 
 Deeper logic notes for how apx builds its generation plans. Flag-by-flag
-reference lives in the [README](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/README.md#commands) and in each command's
+reference lives in the [README](https://github.com/Syntax-Syllogism/apx/blob/v0.3.0/README.md#commands) and in each command's
 `--help` output; this doc covers the naming, flavor, and metadata rules that
 don't fit in a flag summary.
+
+Use [Interactive generation](interactive-mode.md) for the guided `-i` input
+flow. The rules below apply after either prompts or flags have resolved the
+command inputs.
 
 ## Flavor selection (`--at4dx` / `--fflib`)
 
 SObject-based generation commands (`generate`, `domain`, `selector`,
-`service`, and `unitofwork`) require exactly one of `--at4dx` or `--fflib` —
-they're declared as mutually exclusive (`exactlyOne`), so passing both or
-neither is a parse error, not a runtime one. The flavor selects the template
-set used for every artifact in the plan: interface/implementation shape,
-base-class references, and binding metadata format all differ between
-fflib and AT4DX. `action`, `criteria`, `selector method`, and `selector
-field-injection` are AT4DX-only offline commands and do not expose flavor flags.
+`service`, and `unitofwork`) require exactly one of `--at4dx` or `--fflib`.
+In flag-only mode, passing both or neither is rejected before generation. With
+`-i`, the flavor is collected by a single-select prompt and the same exactly-one
+rule is enforced after prompting. The flavor selects the template set used for
+every artifact in the plan: interface/implementation shape, base-class
+references, and binding metadata format all differ between fflib and AT4DX.
+`action`, `criteria`, `selector method`, and `selector field-injection` are
+AT4DX-only offline commands and do not expose flavor flags.
 
 One asymmetry to know about: `apx generate unitofwork --fflib` does **not**
 write a binding file. fflib has no unit-of-work binding metadata concept —

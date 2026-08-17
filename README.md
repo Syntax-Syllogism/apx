@@ -161,7 +161,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/dead.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/src/commands/apx/dead.ts)_
+_See code: [src/commands/apx/dead.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.0/src/commands/apx/dead.ts)_
 
 ## `sf apx generate`
 
@@ -169,17 +169,18 @@ Generate multiple AEP artifact groups in one command run.
 
 ```
 USAGE
-  $ sf apx generate -o <value> -s <value> [--json] [--flags-dir <value>] [--at4dx] [--fflib] [-a <value>] [-b
-    <value>] [-p <value>] [--prefix <value>] [-r] [-d] [-u] [--dry-run]
+  $ sf apx generate [--json] [--flags-dir <value>] [-o <value>] [-s <value>] [--at4dx] [--fflib] [-a <value>] [-b
+    <value>] [-p <value>] [--prefix <value>] [-r] [-d] [-u] [--dry-run] [-i]
 
 FLAGS
   -a, --api-version=<value>       Override the API version used for the org connection.
   -b, --binding-sequence=<value>  Binding sequence value for AT4DX unit-of-work metadata.
   -d, --domain                    Include domain artifacts in aggregate generation.
-  -o, --target-org=<value>        (required) Target org username or alias.
+  -i, --interactive               Prompt for generation flag values interactively.
+  -o, --target-org=<value>        Target org username or alias.
   -p, --output-path=<value>       [default: generated-files] Output folder relative to the Salesforce project root.
   -r, --selector                  Include selector artifacts in aggregate generation.
-  -s, --sobject=<value>           (required) SObject API name used for generated artifacts.
+  -s, --sobject=<value>           SObject API name used for generated artifacts.
   -u, --unit-of-work              Include unit-of-work artifacts in aggregate generation.
       --at4dx                     Generate AT4DX-flavor artifacts.
       --dry-run                   Render and validate generation output without writing files.
@@ -207,7 +208,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/src/commands/apx/generate.ts)_
+_See code: [src/commands/apx/generate.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.0/src/commands/apx/generate.ts)_
 
 ## `sf apx generate action`
 
@@ -215,15 +216,16 @@ Generate an AT4DX domain-process action class, test, and binding metadata.
 
 ```
 USAGE
-  $ sf apx generate action -s <value> -c <value> [--json] [--flags-dir <value>] [--trigger-operation
+  $ sf apx generate action [--json] [--flags-dir <value>] [-s <value>] [-c <value>] [--trigger-operation
     Before_Insert|Before_Update|Before_Delete|After_Insert|After_Update|After_Delete|After_Undelete] [--order <value>]
-    [--process-name <value>] [--description <value>] [-a <value>] [-p <value>] [--dry-run]
+    [--process-name <value>] [--description <value>] [-a <value>] [-p <value>] [--dry-run] [-i]
 
 FLAGS
   -a, --api-version=<value>         Override the API version used for the org connection.
-  -c, --class-name=<value>          (required) Selector method-injection class name.
+  -c, --class-name=<value>          Selector method-injection class name.
+  -i, --interactive                 Prompt for generation flag values interactively.
   -p, --output-path=<value>         [default: generated-files] Output folder relative to the Salesforce project root.
-  -s, --sobject=<value>             (required) SObject API name used for generated artifacts.
+  -s, --sobject=<value>             SObject API name used for generated artifacts.
       --description=<value>         Optional description value written into generated metadata.
       --dry-run                     Render and validate generation output without writing files.
       --order=<value>               Order-of-execution token used for AT4DX domain-process bindings (for example, 10.1).
@@ -252,7 +254,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/action.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/src/commands/apx/generate/action.ts)_
+_See code: [src/commands/apx/generate/action.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.0/src/commands/apx/generate/action.ts)_
 
 ## `sf apx generate criteria`
 
@@ -260,15 +262,16 @@ Generate an AT4DX domain-process criteria class, test, and binding metadata.
 
 ```
 USAGE
-  $ sf apx generate criteria -s <value> -c <value> [--json] [--flags-dir <value>] [--trigger-operation
+  $ sf apx generate criteria [--json] [--flags-dir <value>] [-s <value>] [-c <value>] [--trigger-operation
     Before_Insert|Before_Update|Before_Delete|After_Insert|After_Update|After_Delete|After_Undelete] [--order <value>]
-    [--process-name <value>] [--description <value>] [-a <value>] [-p <value>] [--dry-run]
+    [--process-name <value>] [--description <value>] [-a <value>] [-p <value>] [--dry-run] [-i]
 
 FLAGS
   -a, --api-version=<value>         Override the API version used for the org connection.
-  -c, --class-name=<value>          (required) Selector method-injection class name.
+  -c, --class-name=<value>          Selector method-injection class name.
+  -i, --interactive                 Prompt for generation flag values interactively.
   -p, --output-path=<value>         [default: generated-files] Output folder relative to the Salesforce project root.
-  -s, --sobject=<value>             (required) SObject API name used for generated artifacts.
+  -s, --sobject=<value>             SObject API name used for generated artifacts.
       --description=<value>         Optional description value written into generated metadata.
       --dry-run                     Render and validate generation output without writing files.
       --order=<value>               Order-of-execution token used for AT4DX domain-process bindings (for example, 10.1).
@@ -297,7 +300,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/criteria.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/src/commands/apx/generate/criteria.ts)_
+_See code: [src/commands/apx/generate/criteria.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.0/src/commands/apx/generate/criteria.ts)_
 
 ## `sf apx generate domain`
 
@@ -305,14 +308,15 @@ Generate domain classes, tests, triggers, and metadata for an SObject.
 
 ```
 USAGE
-  $ sf apx generate domain -o <value> -s <value> [--json] [--flags-dir <value>] [--at4dx] [--fflib] [-a <value>] [-p
-    <value>] [--prefix <value>] [--dry-run]
+  $ sf apx generate domain [--json] [--flags-dir <value>] [-o <value>] [-s <value>] [--at4dx] [--fflib] [-a <value>] [-p
+    <value>] [--prefix <value>] [--dry-run] [-i]
 
 FLAGS
   -a, --api-version=<value>  Override the API version used for the org connection.
-  -o, --target-org=<value>   (required) Target org username or alias.
+  -i, --interactive          Prompt for generation flag values interactively.
+  -o, --target-org=<value>   Target org username or alias.
   -p, --output-path=<value>  [default: generated-files] Output folder relative to the Salesforce project root.
-  -s, --sobject=<value>      (required) SObject API name used for generated artifacts.
+  -s, --sobject=<value>      SObject API name used for generated artifacts.
       --at4dx                Generate AT4DX-flavor artifacts.
       --dry-run              Render and validate generation output without writing files.
       --fflib                Generate fflib-flavor artifacts.
@@ -338,7 +342,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/domain.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/src/commands/apx/generate/domain.ts)_
+_See code: [src/commands/apx/generate/domain.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.0/src/commands/apx/generate/domain.ts)_
 
 ## `sf apx generate selector`
 
@@ -346,14 +350,15 @@ Generate selector classes, tests, and metadata for an SObject.
 
 ```
 USAGE
-  $ sf apx generate selector -o <value> -s <value> [--json] [--flags-dir <value>] [--at4dx] [--fflib] [-a <value>] [-p
-    <value>] [--prefix <value>] [--dry-run]
+  $ sf apx generate selector [--json] [--flags-dir <value>] [-o <value>] [-s <value>] [--at4dx] [--fflib] [-a <value>] [-p
+    <value>] [--prefix <value>] [--dry-run] [-i]
 
 FLAGS
   -a, --api-version=<value>  Override the API version used for the org connection.
-  -o, --target-org=<value>   (required) Target org username or alias.
+  -i, --interactive          Prompt for generation flag values interactively.
+  -o, --target-org=<value>   Target org username or alias.
   -p, --output-path=<value>  [default: generated-files] Output folder relative to the Salesforce project root.
-  -s, --sobject=<value>      (required) SObject API name used for generated artifacts.
+  -s, --sobject=<value>      SObject API name used for generated artifacts.
       --at4dx                Generate AT4DX-flavor artifacts.
       --dry-run              Render and validate generation output without writing files.
       --fflib                Generate fflib-flavor artifacts.
@@ -383,7 +388,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/selector.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/src/commands/apx/generate/selector.ts)_
+_See code: [src/commands/apx/generate/selector.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.0/src/commands/apx/generate/selector.ts)_
 
 ## `sf apx generate selector field-injection`
 
@@ -391,15 +396,16 @@ Generate AT4DX selector field-injection metadata (fieldset + binding).
 
 ```
 USAGE
-  $ sf apx generate selector field-injection -s <value> --fields <value> [--json] [--flags-dir <value>] [--fieldset-name <value>] [--label
-    <value>] [--description <value>] [-p <value>] [--dry-run]
+  $ sf apx generate selector field-injection [--json] [--flags-dir <value>] [-s <value>] [--fields <value>] [--fieldset-name <value>]
+    [--label <value>] [--description <value>] [-p <value>] [--dry-run] [-i]
 
 FLAGS
+  -i, --interactive            Prompt for generation flag values interactively.
   -p, --output-path=<value>    [default: generated-files] Output folder relative to the Salesforce project root.
-  -s, --sobject=<value>        (required) SObject API name used for generated artifacts.
+  -s, --sobject=<value>        SObject API name used for generated artifacts.
       --description=<value>    Optional description value written into generated metadata.
       --dry-run                Render and validate generation output without writing files.
-      --fields=<value>         (required) Comma-separated API names for field-set displayed fields.
+      --fields=<value>         Comma-separated API names for field-set displayed fields.
       --fieldset-name=<value>  Optional field-set API name for selector field injection.
       --label=<value>          Optional label value for generated metadata artifacts.
 
@@ -418,7 +424,7 @@ EXAMPLES
     $ sf apx generate selector field-injection -s Account --fields Name,Industry
 ```
 
-_See code: [src/commands/apx/generate/selector/field-injection.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/src/commands/apx/generate/selector/field-injection.ts)_
+_See code: [src/commands/apx/generate/selector/field-injection.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.0/src/commands/apx/generate/selector/field-injection.ts)_
 
 ## `sf apx generate selector method`
 
@@ -426,17 +432,18 @@ Generate an AT4DX selector method-injection class and test.
 
 ```
 USAGE
-  $ sf apx generate selector method -s <value> -c <value> --sobject-selector-class-name <value> [--json] [--flags-dir <value>] [-a
-    <value>] [-p <value>] [--dry-run]
+  $ sf apx generate selector method [--json] [--flags-dir <value>] [-s <value>] [-c <value>] [--sobject-selector-class-name
+    <value>] [-a <value>] [-p <value>] [--dry-run] [-i]
 
 FLAGS
   -a, --api-version=<value>                  Override the API version used for the org connection.
-  -c, --class-name=<value>                   (required) Selector method-injection class name.
+  -c, --class-name=<value>                   Selector method-injection class name.
+  -i, --interactive                          Prompt for generation flag values interactively.
   -p, --output-path=<value>                  [default: generated-files] Output folder relative to the Salesforce project
                                              root.
-  -s, --sobject=<value>                      (required) SObject API name used for generated artifacts.
+  -s, --sobject=<value>                      SObject API name used for generated artifacts.
       --dry-run                              Render and validate generation output without writing files.
-      --sobject-selector-class-name=<value>  (required) Selector implementation class name used by method injection.
+      --sobject-selector-class-name=<value>  Selector implementation class name used by method injection.
 
 GLOBAL FLAGS
   --flags-dir=<value>  Import flag values from a directory.
@@ -459,7 +466,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/selector/method.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/src/commands/apx/generate/selector/method.ts)_
+_See code: [src/commands/apx/generate/selector/method.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.0/src/commands/apx/generate/selector/method.ts)_
 
 ## `sf apx generate service`
 
@@ -467,18 +474,19 @@ Generate service facade/interface/implementation classes and metadata.
 
 ```
 USAGE
-  $ sf apx generate service --service-basename <value> [--json] [--flags-dir <value>] [-o <value>] [--at4dx] [--fflib] [-a
-    <value>] [-p <value>] [--prefix <value>] [--dry-run]
+  $ sf apx generate service [--json] [--flags-dir <value>] [-o <value>] [--service-basename <value>] [--at4dx] [--fflib]
+    [-a <value>] [-p <value>] [--prefix <value>] [--dry-run] [-i]
 
 FLAGS
   -a, --api-version=<value>       Override the API version used for the org connection.
+  -i, --interactive               Prompt for generation flag values interactively.
   -o, --target-org=<value>        Target org username or alias.
   -p, --output-path=<value>       [default: generated-files] Output folder relative to the Salesforce project root.
       --at4dx                     Generate AT4DX-flavor artifacts.
       --dry-run                   Render and validate generation output without writing files.
       --fflib                     Generate fflib-flavor artifacts.
       --prefix=<value>            Optional namespace-style class prefix.
-      --service-basename=<value>  (required) Base name used for generated service classes.
+      --service-basename=<value>  Base name used for generated service classes.
 
 GLOBAL FLAGS
   --flags-dir=<value>  Import flag values from a directory.
@@ -500,7 +508,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/service.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/src/commands/apx/generate/service.ts)_
+_See code: [src/commands/apx/generate/service.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.0/src/commands/apx/generate/service.ts)_
 
 ## `sf apx generate unitofwork`
 
@@ -508,15 +516,16 @@ Generate unit-of-work binding metadata for an SObject.
 
 ```
 USAGE
-  $ sf apx generate unitofwork -o <value> -s <value> [--json] [--flags-dir <value>] [--at4dx] [--fflib] [-a <value>] [-b
-    <value>] [-p <value>] [--prefix <value>] [--dry-run]
+  $ sf apx generate unitofwork [--json] [--flags-dir <value>] [-o <value>] [-s <value>] [--at4dx] [--fflib] [-a <value>] [-b
+    <value>] [-p <value>] [--prefix <value>] [--dry-run] [-i]
 
 FLAGS
   -a, --api-version=<value>       Override the API version used for the org connection.
   -b, --binding-sequence=<value>  Binding sequence value for AT4DX unit-of-work metadata.
-  -o, --target-org=<value>        (required) Target org username or alias.
+  -i, --interactive               Prompt for generation flag values interactively.
+  -o, --target-org=<value>        Target org username or alias.
   -p, --output-path=<value>       [default: generated-files] Output folder relative to the Salesforce project root.
-  -s, --sobject=<value>           (required) SObject API name used for generated artifacts.
+  -s, --sobject=<value>           SObject API name used for generated artifacts.
       --at4dx                     Generate AT4DX-flavor artifacts.
       --dry-run                   Render and validate generation output without writing files.
       --fflib                     Generate fflib-flavor artifacts.
@@ -542,5 +551,5 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/unitofwork.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/src/commands/apx/generate/unitofwork.ts)_
+_See code: [src/commands/apx/generate/unitofwork.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.0/src/commands/apx/generate/unitofwork.ts)_
 <!-- commandsstop -->

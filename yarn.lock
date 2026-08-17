@@ -1097,9 +1097,9 @@
     fastq "^1.6.0"
 
 "@oclif/core@^4", "@oclif/core@^4.11.11", "@oclif/core@^4.11.4", "@oclif/core@^4.13.0":
-  version "4.13.2"
-  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-4.13.2.tgz#3a716b90f40becdf25f6b9d9b63ec05dec3dce94"
-  integrity sha512-YWQs0JvESCliWopKtCZqPLgEB1e3oqR+KYecMReseYWbo7E73Rz2tFwQDFQtAp48VLMiAsiTPKKQaZAo+ghzLw==
+  version "4.13.3"
+  resolved "https://registry.yarnpkg.com/@oclif/core/-/core-4.13.3.tgz#856aa8c48d65e711574dca2955eb0b29d86c1a74"
+  integrity sha512-wBp2igI2KVwq2ZmpnfmGtOROo7aXZIr3OEtAS16g1wHFBqyEuswL+9K50NJWJvlpAmxd+4dVj/ycawXESU3wQQ==
   dependencies:
     ansi-escapes "^4.3.2"
     ansis "^3.17.0"
@@ -1120,10 +1120,10 @@
     wordwrap "^1.0.0"
     wrap-ansi "^7.0.0"
 
-"@oclif/plugin-command-snapshot@^5.3.33":
-  version "5.3.33"
-  resolved "https://registry.yarnpkg.com/@oclif/plugin-command-snapshot/-/plugin-command-snapshot-5.3.33.tgz#36f6cc1b8b9154e6087f9f7f8a3a83b0c089198f"
-  integrity sha512-Djtpaf6tO73cWMLXY+i7SZgfkVz3zRFZ1rwTKrAQZ55gN22zjHn0QXc181dtEGYcVb+laYJGHo/epvDntySi3g==
+"@oclif/plugin-command-snapshot@^5.3.35":
+  version "5.3.35"
+  resolved "https://registry.yarnpkg.com/@oclif/plugin-command-snapshot/-/plugin-command-snapshot-5.3.35.tgz#0bb1f3627a4d3209c5bd41089dbfffefbf94a60e"
+  integrity sha512-IIj6zISG1muLLSpPI560n6Q2F4njN+OFTP/PXp+sdGxrB0pT/NtuRQ6DXwo0fvOX2AA6aG7HMLNYRO5h5feGJg==
   dependencies:
     "@oclif/core" "^4"
     ansis "^3.17.0"
@@ -7504,12 +7504,7 @@ typedoc@^0.25.12:
     minimatch "^9.0.3"
     shiki "^0.14.7"
 
-"typescript@^4.6.4 || ^5.2.2", typescript@^5.4.3, typescript@^5.4.5:
-  version "5.4.5"
-  resolved "https://registry.npmjs.org/typescript/-/typescript-5.4.5.tgz"
-  integrity sha512-vcI4UpRgg81oIRUFwR0WSIHKt11nJ7SAVlYNIu+QpqeyXP+gpQJy/Z4+F0aGxSE4MqwjyXvW/TzgkLAx2AGHwQ==
-
-typescript@^5.9.3:
+"typescript@^4.6.4 || ^5.2.2", typescript@^5.4.3, typescript@^5.9.3:
   version "5.9.3"
   resolved "https://registry.yarnpkg.com/typescript/-/typescript-5.9.3.tgz#5b4f59e15310ab17a216f5d6cf53ee476ede670f"
   integrity sha512-jl1vZzPDinLr9eUt3J/t7V6FgNEw9QjvBPdysz9KfQDD41fQrC2Y4vKQdiaUpFT4bXlb1RHhLpp8wtm6M5TgSw==

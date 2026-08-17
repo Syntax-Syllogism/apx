@@ -1,7 +1,7 @@
 {
   "name": "@syntax-syllogism/apx",
   "description": "a sf cli plugin for Apex Enterprise Patterns (fflib/at4dx) code generation",
-  "version": "0.2.4",
+  "version": "0.3.0",
   "packageManager": "yarn@1.22.22",
   "repository": {
     "type": "git",
@@ -12,6 +12,7 @@
   },
   "homepage": "https://github.com/Syntax-Syllogism/apx#readme",
   "dependencies": {
+    "@inquirer/prompts": "^7.10.1",
     "@oclif/core": "^4",
     "@salesforce/core": "^8",
     "@salesforce/sf-plugins-core": "^12",
@@ -19,7 +20,7 @@
     "pluralize": "^8.0.0"
   },
   "devDependencies": {
-    "@oclif/plugin-command-snapshot": "^5.3.33",
+    "@oclif/plugin-command-snapshot": "^5.3.35",
     "@salesforce/cli-plugins-testkit": "^5.3.10",
     "@salesforce/dev-scripts": "^10",
     "@types/pluralize": "^0.0.33",
@@ -30,7 +31,7 @@
     "markdownlint-cli2": "^0.23.2",
     "oclif": "^4.23.29",
     "ts-node": "^10.9.2",
-    "typescript": "^5.4.5"
+    "typescript": "^5.9.3"
   },
   "engines": {
     "node": ">=18.0.0"

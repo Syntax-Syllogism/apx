@@ -13,7 +13,7 @@ from a described SObject. This guide walks through your first generation run.
 sf plugins install @syntax-syllogism/apx@x.y.z
 ```
 
-Or build from source (see [Contributing](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/README.md#contributing)):
+Or build from source (see [Contributing](https://github.com/Syntax-Syllogism/apx/blob/v0.3.0/README.md#contributing)):
 
 ```bash
 git clone git@github.com:jprichter/apx
@@ -60,6 +60,17 @@ without touching disk:
 sf apx generate selector --target-org myOrg --sobject Account --at4dx --dry-run --json
 ```
 
+If you prefer a guided flow, add `-i`/`--interactive`. APX prompts for values
+that were not supplied, shows a summary, and requires confirmation before it
+writes anything:
+
+```bash
+sf apx generate selector -i --target-org myOrg --sobject Account
+```
+
+See [Interactive generation](interactive-mode.md) for prompt coverage,
+confirmation behavior, and the TTY requirement.
+
 ## Generating multiple layers at once
 
 The bare `apx generate` command builds several artifact groups from a single
@@ -96,5 +107,5 @@ build the binding's developer name.
 + [Command details](command-details.md) — flavor selection, naming/prefix
   rules, binding sequence, domain-process metadata, dry-run/overwrite
   semantics.
-+ Full CLI reference: see the [Commands](https://github.com/Syntax-Syllogism/apx/blob/v0.2.4/README.md#commands) section of
++ Full CLI reference: see the [Commands](https://github.com/Syntax-Syllogism/apx/blob/v0.3.0/README.md#commands) section of
   the README, or run any command with `--help`.

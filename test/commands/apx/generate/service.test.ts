@@ -43,4 +43,13 @@ describe('apx generate service', () => {
       expect(message).to.include('--fflib');
     }
   });
+
+  it('fails fast when interactive mode is used without a TTY', async () => {
+    try {
+      await ApxGenerateService.run(['--interactive']);
+      expect.fail('expected a non-TTY error');
+    } catch (error) {
+      expect(String(error)).to.include('requires an interactive terminal');
+    }
+  });
 });

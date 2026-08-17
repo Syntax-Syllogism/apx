@@ -1,4 +1,4 @@
-import { Messages } from '@salesforce/core';
+import { Messages, Org } from '@salesforce/core';
 import { Flags } from '@salesforce/sf-plugins-core';
 import type { Flavor } from './model/types.js';
 import { DEFAULT_OUTPUT_PATH } from './commandSupport.js';
@@ -11,6 +11,14 @@ export const targetOrgFlag = Flags.requiredOrg({
   summary: messages.getMessage('flags.target-org.summary'),
 });
 
+export const interactiveTargetOrgFlag = Flags.custom<Org>({
+  parse: async (input) => Org.create({ aliasOrUsername: input }),
+})({
+  char: 'o',
+  helpValue: '<value>',
+  summary: messages.getMessage('flags.target-org.summary'),
+});
+
 export const optionalTargetOrgFlag = Flags.optionalOrg({
   char: 'o',
   summary: messages.getMessage('flags.target-org.summary'),
@@ -18,18 +26,15 @@ export const optionalTargetOrgFlag = Flags.optionalOrg({
 
 export const sobjectFlag = Flags.string({
   char: 's',
-  required: true,
   summary: messages.getMessage('flags.sobject.summary'),
 });
 
 export const at4dxFlag = Flags.boolean({
   summary: messages.getMessage('flags.at4dx.summary'),
-  exactlyOne: ['at4dx', 'fflib'],
 });
 
 export const fflibFlag = Flags.boolean({
   summary: messages.getMessage('flags.fflib.summary'),
-  exactlyOne: ['at4dx', 'fflib'],
 });
 
 export const apiVersionFlag = Flags.orgApiVersion({
@@ -50,12 +55,10 @@ export const prefixFlag = Flags.string({
 
 export const classNameFlag = Flags.string({
   char: 'c',
-  required: true,
   summary: messages.getMessage('flags.class-name.summary'),
 });
 
 export const selectorClassNameFlag = Flags.string({
-  required: true,
   summary: messages.getMessage('flags.sobject-selector-class-name.summary'),
 });
 
@@ -80,7 +83,6 @@ export const fieldsetNameFlag = Flags.string({
 });
 
 export const fieldsFlag = Flags.string({
-  required: true,
   summary: messages.getMessage('flags.fields.summary'),
 });
 
@@ -105,8 +107,12 @@ export const bindingSequenceFlag = Flags.string({
 });
 
 export const serviceBaseNameFlag = Flags.string({
-  required: true,
   summary: messages.getMessage('flags.service-basename.summary'),
+});
+
+export const interactiveFlag = Flags.boolean({
+  char: 'i',
+  summary: messages.getMessage('flags.interactive.summary'),
 });
 
 export const selectorToggleFlag = Flags.boolean({
