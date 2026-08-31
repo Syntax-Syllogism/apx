@@ -29,6 +29,7 @@ export default defineConfig({
           base: BASE,
           toolSlug: 'apx',
           publicRepo: 'Syntax-Syllogism/apx',
+          accent: 'orange',
         }),
         sidebar: ['index', 'getting-started', 'interactive-mode', 'command-details', 'dead-code'],
       },
