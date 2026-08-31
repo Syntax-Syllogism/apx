@@ -4,7 +4,7 @@ description: Naming, flavor, and metadata rules for APX generation commands.
 ---
 
 Deeper logic notes for how apx builds its generation plans. Flag-by-flag
-reference lives in the [README](https://github.com/Syntax-Syllogism/apx/blob/v0.3.1/README.md#commands) and in each command's
+reference lives in the [README](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/README.md#commands) and in each command's
 `--help` output; this doc covers the naming, flavor, and metadata rules that
 don't fit in a flag summary.
 
