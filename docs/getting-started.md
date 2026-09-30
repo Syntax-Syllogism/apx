@@ -3,9 +3,7 @@ title: Getting started with APX
 description: Install APX and generate Apex Enterprise Patterns code.
 ---
 
-`apx` is a Salesforce CLI plugin that generates Apex Enterprise Patterns
-(fflib/at4dx) code — Domain, Selector, Service, and Unit of Work artifacts —
-from a described SObject. This guide walks through your first generation run.
+`apx` is a Salesforce CLI plugin that generates Apex Enterprise Patterns code (fflib or at4dx) for an SObject: Domain, Selector, Service, and Unit of Work. This guide walks you through a first run.
 
 ## Install
 
@@ -13,7 +11,7 @@ from a described SObject. This guide walks through your first generation run.
 sf plugins install @syntax-syllogism/apx@x.y.z
 ```
 
-Or build from source (see [Contributing](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/README.md#contributing)):
+Or build from source (see [Contributing](https://github.com/Syntax-Syllogism/apx/blob/v0.3.3/README.md#contributing)):
 
 ```bash
 git clone git@github.com:jprichter/apx
@@ -22,90 +20,68 @@ yarn && yarn build
 node ./bin/dev.js apx generate --help
 ```
 
-## Concepts
+## The basics
 
-Most org-backed `apx generate` commands need two things:
+Most `apx generate` commands that use an org need two things:
 
-1. **A flavor** — exactly one of `--at4dx` or `--fflib`. These are mutually
-   exclusive; you must pick one. The flavor selects which template set is
-   rendered (interface/implementation shape, binding metadata format, base
-   class references) for every artifact the command produces.
-2. **A target** — org-backed commands describe a live SObject via
-   `--target-org` + `--sobject` to pull real field names and
-   custom/standard-object status. The AT4DX-only `action`, `criteria`,
-   `selector method`, and `selector field-injection` commands work offline
-   with an SObject API name as a string. `service` also works offline, using
-   `--service-basename` instead of an SObject target.
+1. **A flavor.** Pass exactly one of `--at4dx` or `--fflib`. The flavor decides which templates are used for every file the command creates: the interface and implementation shape, the binding metadata format, and the base classes.
+2. **A target.** `--target-org` and `--sobject` make APX describe a live SObject, so it can use the real field names and know whether the object is custom or standard.
 
-All commands support `--dry-run` (render and validate without writing files)
-and `--output-path` (defaults to `generated-files`, relative to the Salesforce
-project root).
+Some commands work offline. The AT4DX-only `action`, `criteria`, `selector method`, and `selector field-injection` commands take the SObject API name as plain text. `service` also works offline and takes `--service-basename` instead of an SObject.
 
-## Your first generation run
+Every command accepts `--dry-run` (render and validate, write nothing) and `--output-path` (default `generated-files`, relative to the Salesforce project root).
 
-Generate a full selector for `Account` in AT4DX style:
+## Your first run
+
+Generate an AT4DX selector for `Account`:
 
 ```bash
 sf apx generate selector --target-org myOrg --sobject Account --at4dx
 ```
 
-This describes `Account` against `myOrg`, then writes a selector interface,
-implementation, unit test, and (for AT4DX) a `SelectorConfig` binding custom
-metadata record under `generated-files/`.
+APX describes `Account` in `myOrg`, then writes a selector interface, an implementation, a unit test, and (for AT4DX) a `SelectorConfig` binding custom metadata record under `generated-files/`.
 
-Preview first with `--dry-run` if you want to see what would be written
-without touching disk:
+To see what it would write first, add `--dry-run`:
 
 ```bash
 sf apx generate selector --target-org myOrg --sobject Account --at4dx --dry-run --json
 ```
 
-If you prefer a guided flow, add `-i`/`--interactive`. APX prompts for values
-that were not supplied, shows a summary, and requires confirmation before it
-writes anything:
+Want to be prompted instead? Add `-i`. APX asks for the values you left out, shows a summary, and asks you to confirm before it writes anything:
 
 ```bash
 sf apx generate selector -i --target-org myOrg --sobject Account
 ```
 
-See [Interactive generation](interactive-mode.md) for prompt coverage,
-confirmation behavior, and the TTY requirement.
+See [Interactive generation](interactive-mode.md) for the details.
 
-## Generating multiple layers at once
+## Several layers at once
 
-The bare `apx generate` command builds several artifact groups from a single
-SObject describe, so you only pay for one API round-trip:
+The bare `apx generate` command builds more than one layer from a single SObject describe, so it makes one API call:
 
 ```bash
 sf apx generate --target-org myOrg --sobject Account \
   --selector --domain --unit-of-work --at4dx
 ```
 
-At least one of `--selector`, `--domain`, `--unit-of-work` is required — the
-command errors out if none are set. See
-[Aggregate generation](command-details.md#aggregate-generation-apx-generate)
-for exactly how binding sequence and prefix apply across the combined plan.
+Set at least one of `--selector`, `--domain`, or `--unit-of-work`, or the command fails. See [Aggregate generation](command-details.md#aggregate-generation-apx-generate) for how binding sequence and prefix apply.
 
 ## Offline scaffolding
 
-Some artifacts don't need an org at all:
+Some artifacts don't need an org:
 
 ```bash
-# Action class + AT4DX domain-process binding, entirely offline
+# An action class and its AT4DX domain-process binding
 sf apx generate action -s Account -c DefaultAccountSloganBasedOnNameAction
 
-# Field-injection fieldset + binding for an existing selector
+# A field set and binding for an existing selector
 sf apx generate selector field-injection -s Account --fields Name,Industry
 ```
 
-See [Offline domain-process generation](command-details.md#offline-domain-process-generation-action--criteria)
-for how `--trigger-operation`, `--order`, and `--process-name` combine to
-build the binding's developer name.
+See [Offline domain-process generation](command-details.md#offline-domain-process-generation-action--criteria) for how `--trigger-operation`, `--order`, and `--process-name` combine into the binding's developer name.
 
 ## Next steps
 
-+ [Command details](command-details.md) — flavor selection, naming/prefix
-  rules, binding sequence, domain-process metadata, dry-run/overwrite
-  semantics.
-+ Full CLI reference: see the [Commands](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/README.md#commands) section of
-  the README, or run any command with `--help`.
+* [Command details](command-details.md): flavors, naming and prefixes, binding sequence, domain-process metadata, and dry-run and overwrite behavior.
+* [Dead-code analysis](dead-code.md): find classes nothing references.
+* Every flag: the [Commands](https://github.com/Syntax-Syllogism/apx/blob/v0.3.3/README.md#commands) section of the README, or `--help` on any command.

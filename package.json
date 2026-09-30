@@ -1,7 +1,7 @@
 {
   "name": "@syntax-syllogism/apx",
   "description": "a sf cli plugin for Apex Enterprise Patterns (fflib/at4dx) code generation",
-  "version": "0.3.2",
+  "version": "0.3.3",
   "packageManager": "yarn@1.22.22",
   "repository": {
     "type": "git",
@@ -23,6 +23,7 @@
     "@oclif/plugin-command-snapshot": "^5.3.35",
     "@salesforce/cli-plugins-testkit": "^5.3.10",
     "@salesforce/dev-scripts": "^10",
+    "@syntax-syllogism/docs-theme": "^0.4.0",
     "@types/pluralize": "^0.0.33",
     "c8": "^11.0.0",
     "eslint-plugin-sf-plugin": "^1.18.6",
@@ -88,6 +89,7 @@
     "clean-all": "sf-clean all",
     "compile": "wireit",
     "docs": "sf-docs",
+    "docs:cli-reference": "ss-docs-cli-reference",
     "format": "wireit",
     "link-check": "wireit",
     "lint": "wireit",
@@ -100,10 +102,12 @@
     "test:nuts": "mocha \"**/*.nut.ts\" --slow 4500 --timeout 600000 --parallel",
     "test:nuts:cov": "c8 --check-coverage false mocha \"**/*.nut.ts\" --slow 4500 --timeout 600000 --parallel",
     "test:only": "wireit",
-    "version": "oclif readme"
+    "version": "oclif readme && ss-docs-cli-reference"
   },
   "publishConfig": {
-    "access": "public"
+    "access": "public",
+    "registry": "https://registry.npmjs.org/",
+    "@syntax-syllogism:registry": "https://registry.npmjs.org/"
   },
   "wireit": {
     "build": {
@@ -159,6 +163,7 @@
       "dependencies": [
         "test:compile",
         "test:only",
+        "test:cli-reference",
         "lint"
       ]
     },
@@ -174,6 +179,19 @@
         ".mocha*",
         "!*.nut.ts",
         ".nycrc"
+      ],
+      "output": []
+    },
+    "test:cli-reference": {
+      "command": "ss-docs-cli-reference --check",
+      "dependencies": [
+        "compile"
+      ],
+      "files": [
+        "lib/**",
+        "messages/**",
+        "docs/cli-reference.md",
+        "package.json"
       ],
       "output": []
     },

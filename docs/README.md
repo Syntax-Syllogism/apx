@@ -3,19 +3,14 @@ title: APX documentation
 description: Guides for generating Apex Enterprise Patterns code and analyzing dead Apex classes.
 ---
 
-APX is a Salesforce CLI plugin for generating Apex Enterprise Patterns (fflib
-and AT4DX) code and finding Apex classes with no known inbound references.
+APX is a Salesforce CLI plugin. It generates Apex Enterprise Patterns code (fflib and AT4DX) and finds Apex classes that nothing references.
 
 ## Guides
 
-- [Getting started](getting-started.md) — install APX and generate your first
-  Domain, Selector, Service, or Unit of Work artifacts.
-- [Interactive generation](interactive-mode.md) — use guided prompts, review
-  resolved values, and confirm generation safely.
-- [Command details](command-details.md) — understand flavor selection, naming,
-  binding metadata, and dry-run behavior.
-- [Dead-code analysis](dead-code.md) — review dependency analysis results and
-  produce safe destructive manifests.
+- [Getting started](getting-started.md): install APX and generate your first Domain, Selector, Service, or Unit of Work.
+- [Interactive generation](interactive-mode.md): use guided prompts, review the values, and confirm before anything is written.
+- [Command details](command-details.md): flavors, naming, binding metadata, and dry runs.
+- [CLI reference](cli-reference.md): every command with its usage, flags, and examples.
+- [Dead-code analysis](dead-code.md): review unreferenced classes and build a safe destructive manifest.
 
-For the complete flag reference, see the [README command reference](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/README.md#commands)
-or run any command with `--help`.
+For every flag, see the [CLI reference](cli-reference.md) or run a command with `--help`.

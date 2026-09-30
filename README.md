@@ -2,7 +2,7 @@
 
 [![NPM](https://img.shields.io/npm/v/@syntax-syllogism/apx.svg?label=%40syntax-syllogism%2Fapx)](https://www.npmjs.com/package/@syntax-syllogism/apx) [![Downloads/week](https://img.shields.io/npm/dw/@syntax-syllogism/apx.svg)](https://npmjs.org/package/@syntax-syllogism/apx) [![License](https://img.shields.io/badge/License-MIT-brightgreen.svg)](https://raw.githubusercontent.com/Syntax-Syllogism/apx/blob/release/LICENSE)
 
-a Salesforce CLI plugin that generates Apex Enterprise Patterns (fflib/at4dx) code — Domain, Selector, Service, and Unit of Work artifacts — from a described SObject.
+A Salesforce CLI plugin that generates Apex Enterprise Patterns code (fflib or at4dx) for an SObject: Domain, Selector, Service, and Unit of Work classes. It can also find Apex classes that nothing references.
 
 ## Install
 
@@ -13,65 +13,55 @@ sf plugins install @syntax-syllogism/apx@x.y.z
 ## Quick start
 
 ```bash
-# Generate a full Domain layer (class, interface, trigger, tests, metadata) for Account
+# Domain layer for Account: class, interface, trigger, tests, and metadata
 sf apx generate domain --target-org myOrg --sobject Account --at4dx
 
-# Generate just a Selector
+# Just a Selector
 sf apx generate selector --target-org myOrg --sobject Account --fflib
 
-# Generate everything (domain/selector/service/unitofwork) in one pass
-sf apx generate --target-org myOrg --sobject Account --at4dx
+# Selector, Domain, and Unit of Work in one pass
+sf apx generate --target-org myOrg --sobject Account --selector --domain --unit-of-work --at4dx
 ```
+
+Add `--dry-run` to any command to see what it would write without writing it.
 
 ## Documentation
 
-* [Getting started](docs/getting-started.md)
-* [Command details](docs/command-details.md) — flavor selection, naming/prefix
-  rules, binding sequence, domain-process metadata, dry-run/overwrite semantics.
-* [Dead-code analysis](docs/dead-code.md) — dependency analysis, suppression rules,
-  classification buckets, and destructive-manifest safety.
+New here? Start with [Getting started](docs/getting-started.md).
+
+* [Command details](docs/command-details.md): flavors, naming and prefixes, binding sequence, domain-process metadata, and dry-run and overwrite behavior
+* [Interactive generation](docs/interactive-mode.md): `-i` prompts for the values you leave out
+* [Dead-code analysis](docs/dead-code.md): find unreferenced classes and build a safe destructive manifest
 
 ## Issues
 
-Please report any issues at <https://github.com/Syntax-Syllogism/apx/issues>.
+Report problems at <https://github.com/Syntax-Syllogism/apx/issues>.
 
 ## Contributing
 
-1. Please read our [Code of Conduct](CODE_OF_CONDUCT.md).
-2. Create a new issue before starting your project so that we can keep track of what you are trying to add/fix. That way, we can also offer suggestions or let you know if there is already an effort in progress.
-3. Fork this repository.
-4. [Build the plugin locally](#build).
-5. Create a _topic_ branch in your fork. Note, this step is recommended but technically not required if contributing using a fork.
-6. Edit the code in your fork.
-7. Write appropriate tests for your changes. Try to achieve at least 75% code coverage on any new code. No pull request will be accepted without unit tests.
-8. Send us a pull request when you are done. We'll review your code, suggest any needed changes, and merge it in.
+Read the [Code of Conduct](CODE_OF_CONDUCT.md) and [CONTRIBUTING.md](CONTRIBUTING.md). Open an issue before starting work so we can avoid duplicate effort. Pull requests need unit tests.
 
 ### Build
 
-To build the plugin locally, make sure to have yarn installed and run the following commands:
+You need yarn.
 
 ```bash
-# Clone the repository
 git clone git@github.com:Syntax-Syllogism/apx
-
-# Install the dependencies and compile
+cd apx
 yarn && yarn build
 ```
 
-To use your plugin locally, invoke the `./bin/dev.js` file through Node.
+Run the plugin from source:
 
 ```bash
-# Run using local run file.
 node ./bin/dev.js apx generate domain --help
 ```
 
-There should be no differences when running via the Salesforce CLI or using the local run file. However, it can be useful to link the plugin to do some additional testing or run your commands from anywhere on your machine.
+To run it from anywhere through the Salesforce CLI, link it:
 
 ```bash
-# Link your plugin to the sf cli
 sf plugins link .
-# To verify
-sf plugins
+sf plugins   # verify
 ```
 
 ## Commands
@@ -161,7 +151,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/dead.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/src/commands/apx/dead.ts)_
+_See code: [src/commands/apx/dead.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.3/src/commands/apx/dead.ts)_
 
 ## `sf apx generate`
 
@@ -208,7 +198,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/src/commands/apx/generate.ts)_
+_See code: [src/commands/apx/generate.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.3/src/commands/apx/generate.ts)_
 
 ## `sf apx generate action`
 
@@ -254,7 +244,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/action.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/src/commands/apx/generate/action.ts)_
+_See code: [src/commands/apx/generate/action.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.3/src/commands/apx/generate/action.ts)_
 
 ## `sf apx generate criteria`
 
@@ -300,7 +290,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/criteria.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/src/commands/apx/generate/criteria.ts)_
+_See code: [src/commands/apx/generate/criteria.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.3/src/commands/apx/generate/criteria.ts)_
 
 ## `sf apx generate domain`
 
@@ -342,7 +332,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/domain.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/src/commands/apx/generate/domain.ts)_
+_See code: [src/commands/apx/generate/domain.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.3/src/commands/apx/generate/domain.ts)_
 
 ## `sf apx generate selector`
 
@@ -388,7 +378,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/selector.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/src/commands/apx/generate/selector.ts)_
+_See code: [src/commands/apx/generate/selector.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.3/src/commands/apx/generate/selector.ts)_
 
 ## `sf apx generate selector field-injection`
 
@@ -424,7 +414,7 @@ EXAMPLES
     $ sf apx generate selector field-injection -s Account --fields Name,Industry
 ```
 
-_See code: [src/commands/apx/generate/selector/field-injection.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/src/commands/apx/generate/selector/field-injection.ts)_
+_See code: [src/commands/apx/generate/selector/field-injection.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.3/src/commands/apx/generate/selector/field-injection.ts)_
 
 ## `sf apx generate selector method`
 
@@ -466,7 +456,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/selector/method.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/src/commands/apx/generate/selector/method.ts)_
+_See code: [src/commands/apx/generate/selector/method.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.3/src/commands/apx/generate/selector/method.ts)_
 
 ## `sf apx generate service`
 
@@ -508,7 +498,7 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/service.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/src/commands/apx/generate/service.ts)_
+_See code: [src/commands/apx/generate/service.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.3/src/commands/apx/generate/service.ts)_
 
 ## `sf apx generate unitofwork`
 
@@ -551,5 +541,5 @@ FLAG DESCRIPTIONS
     Override the api version used for api requests made by this command
 ```
 
-_See code: [src/commands/apx/generate/unitofwork.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/src/commands/apx/generate/unitofwork.ts)_
+_See code: [src/commands/apx/generate/unitofwork.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.3/src/commands/apx/generate/unitofwork.ts)_
 <!-- commandsstop -->

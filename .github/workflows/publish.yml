@@ -33,6 +33,15 @@ jobs:
           registry-url: https://registry.npmjs.org
           cache: yarn
 
+      # docs-theme (devDependency) lives on GitHub Packages, and the project
+      # .npmrc maps the @syntax-syllogism scope there. Append its token to the
+      # user config so the install authenticates without disturbing the npmjs
+      # publish auth that setup-node wrote to the same file.
+      - name: Authenticate to GitHub Packages
+        run: echo "//npm.pkg.github.com/:_authToken=${PACKAGES_READ_TOKEN}" >> "$NPM_CONFIG_USERCONFIG"
+        env:
+          PACKAGES_READ_TOKEN: ${{ secrets.PACKAGES_READ_TOKEN }}
+
       - name: Install dependencies
         run: yarn install --frozen-lockfile
 
@@ -64,6 +73,6 @@ jobs:
       # `--provenance` works either way: it signs via the OIDC id-token, which is
       # independent of how the publish itself authenticates.
       - name: Publish to npm
-        run: npm publish *.tgz --access public --provenance
+        run: npm publish *.tgz --access public --provenance --@syntax-syllogism:registry=https://registry.npmjs.org
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

@@ -3,131 +3,60 @@ title: Command details
 description: Naming, flavor, and metadata rules for APX generation commands.
 ---
 
-Deeper logic notes for how apx builds its generation plans. Flag-by-flag
-reference lives in the [README](https://github.com/Syntax-Syllogism/apx/blob/v0.3.2/README.md#commands) and in each command's
-`--help` output; this doc covers the naming, flavor, and metadata rules that
-don't fit in a flag summary.
+This page explains how apx builds its generation plans: the naming, flavor, and metadata rules that don't fit in a flag summary. For flags, see the [CLI reference](cli-reference.md) or a command's `--help`.
 
-Use [Interactive generation](interactive-mode.md) for the guided `-i` input
-flow. The rules below apply after either prompts or flags have resolved the
-command inputs.
+The rules below apply once inputs are resolved, whether from flags or from [interactive prompts](interactive-mode.md).
 
-## Flavor selection (`--at4dx` / `--fflib`)
+## Flavor (`--at4dx` / `--fflib`)
 
-SObject-based generation commands (`generate`, `domain`, `selector`,
-`service`, and `unitofwork`) require exactly one of `--at4dx` or `--fflib`.
-In flag-only mode, passing both or neither is rejected before generation. With
-`-i`, the flavor is collected by a single-select prompt and the same exactly-one
-rule is enforced after prompting. The flavor selects the template set used for
-every artifact in the plan: interface/implementation shape, base-class
-references, and binding metadata format all differ between fflib and AT4DX.
-`action`, `criteria`, `selector method`, and `selector field-injection` are
-AT4DX-only offline commands and do not expose flavor flags.
+`generate`, `domain`, `selector`, `service`, and `unitofwork` need exactly one of `--at4dx` or `--fflib`. Passing both or neither fails before anything is generated. With `-i`, you pick the flavor from a list, and the same rule is checked afterward. The flavor sets the templates for every file in the plan: the interface and implementation shape, base class references, and binding metadata format all differ between fflib and AT4DX.
 
-One asymmetry to know about: `apx generate unitofwork --fflib` does **not**
-write a binding file. fflib has no unit-of-work binding metadata concept —
-instead the command prints the `Application` factory snippet you need to add
-by hand (the SObjectType to register), and returns an empty `created`/`skipped`
-array with that snippet under `manualSteps` in the JSON result. Only
-`--at4dx` writes an actual `unitOfWorkBinding` artifact.
+`action`, `criteria`, `selector method`, and `selector field-injection` are AT4DX-only offline commands, so they have no flavor flags.
 
-## Naming and the `--prefix` flag
+One difference to know about: `apx generate unitofwork --fflib` writes **no** binding file, because fflib has no unit-of-work binding metadata. Instead, the command prints the `Application` factory snippet (the SObjectType to register) for you to add by hand. In the JSON result, `created` and `skipped` are empty and the snippet is under `manualSteps`. Only `--at4dx` writes a `unitOfWorkBinding`.
 
-Class names are derived from the SObject API name, not typed in directly.
-`--prefix` (when given) is upper-cased and joined with `_` ahead of the base
-name — e.g. `--prefix foobar` on `Property__c` produces `FOOBAR_Properties`
-for the domain class rather than `Properties`. The SObject API name has any
-existing leading prefix stripped first (case-insensitively) so re-running
-generation with the same prefix doesn't double it up, `__c` and underscores
-are removed, and the result is pluralized for selector/domain class base
-names (`Account` → `Accounts`).
+## Naming and `--prefix`
 
-Interfaces get an `I` inserted after the prefix (`FOOBAR_IProperties`), and
-unit test classes get a `Test` suffix, truncated so the total stays within
-Apex's 40-character type-name limit.
+Class names come from the SObject API name. You don't type them in.
 
-Service commands (`generate service`) use `--service-basename` directly
-instead of describing an SObject — there's no org round-trip or required
-`--target-org`, and no pluralization, since a service isn't tied to one object.
+* `--prefix` is upper-cased and joined to the base name with `_`. For example, `--prefix foobar` on `Property__c` gives the domain class `FOOBAR_Properties`, not `Properties`.
+* Any existing leading prefix on the SObject name is stripped first (case-insensitively), so re-running with the same prefix doesn't double it.
+* `__c` and underscores are removed, and selector and domain base names are pluralized (`Account` becomes `Accounts`).
+* Interfaces get an `I` after the prefix (`FOOBAR_IProperties`).
+* Test classes get a `Test` suffix, shortened to stay within Apex's 40-character type-name limit.
+
+`generate service` uses `--service-basename` as given. It doesn't describe an SObject, needs no `--target-org`, and isn't pluralized, because a service isn't tied to one object.
 
 ## Aggregate generation (`apx generate`)
 
-The bare `generate` command combines `buildSelectorPlan`, `buildDomainPlan`,
-and `buildUnitOfWorkPlan` from a single SObject describe. At least one of
-`--selector`, `--domain`, `--unit-of-work` must be set, or the command
-errors before making any org call. All three (when selected) share the same
-`--prefix`, `--at4dx`/`--fflib` flavor, and `--output-path`; `--binding-sequence`
-only affects the unit-of-work artifact and only when `--at4dx` is selected.
+The bare `generate` command builds selector, domain, and unit-of-work plans from one SObject describe. Set at least one of `--selector`, `--domain`, or `--unit-of-work`, or the command fails before it touches the org. All selected layers share `--prefix`, the flavor, and `--output-path`. `--binding-sequence` affects only the unit-of-work artifact, and only with `--at4dx`.
 
 ## Binding sequence (`--binding-sequence` / `-b`)
 
-Only meaningful for AT4DX unit-of-work bindings. If omitted it defaults to
-`1000.0`. This value controls ordering when multiple SObjects register with
-the same `Application` factory — lower values bind earlier. There's no
-validation on the format beyond what AT4DX's own metadata expects; pick a
-value that fits your existing sequence.
+This applies only to AT4DX unit-of-work bindings. The default is `1000.0`. When several SObjects register with the same `Application` factory, lower values bind first. APX doesn't check the format beyond what AT4DX's metadata expects, so choose a value that fits your existing sequence.
 
 ## Offline domain-process generation (`action` / `criteria`)
 
-`apx generate action` and `apx generate criteria` don't describe an org —
-they build a `DomainProcessBinding` custom metadata record entirely from
-flags:
+`apx generate action` and `apx generate criteria` build a `DomainProcessBinding` custom metadata record from flags alone. They never need `--target-org`. They use the SObject API name only as text in the generated method signatures, so they work even for SObjects that don't exist in any org yet.
 
-* `--order` defaults to `10.2` for `action` and `10.1` for `criteria`, and
-  must match `\d+(\.\d+)?` (e.g. `10`, `10.1`, `10.20`) — anything else is a
-  validation error before any files are written.
-* `--process-name` is optional. When set, the binding's developer name
-  becomes `<processName><order-with-dots-as-underscores><Type>` (e.g.
-  `FishCompanySlogans10_20Criteria`). When omitted, the developer name falls
-  back to the class name itself.
-* Custom metadata record names are capped at 40 characters
-  (`isWithinCustomMetadataNameLimit`). If the computed developer name would
-  exceed that, the command errors out rather than silently truncating —
-  shorten `--process-name` or the class name.
-* `--description` is escaped for XML (`&`, `<`, `>`) before being written
-  into the metadata file, so you can pass ordinary prose without worrying
-  about breaking the generated XML.
-* `--trigger-operation` is validated against the AT4DX enum
-  (`Before_Insert` … `After_Undelete`) at parse time via `options`.
-
-These commands never require `--target-org` — they only need the SObject
-API name as a string for the generated class's method signatures, so they
-work even against SObjects that don't exist yet in any org.
+* `--order` defaults to `10.2` for `action` and `10.1` for `criteria`. It must match `\d+(\.\d+)?` (for example `10`, `10.1`, or `10.20`). Anything else is a validation error before any file is written.
+* `--process-name` is optional. If you set it, the binding's developer name is `<processName><order-with-dots-as-underscores><Type>`, such as `FishCompanySlogans10_20Criteria`. If you don't, the developer name is the class name.
+* Custom metadata record names are limited to 40 characters. If the developer name would be longer, the command fails instead of truncating it. Shorten `--process-name` or the class name.
+* `--description` is XML-escaped (`&`, `<`, `>`) before it's written, so ordinary prose is safe.
+* `--trigger-operation` is checked against the AT4DX values (`Before_Insert` through `After_Undelete`) when the command parses its flags.
 
 ## Selector field injection (`selector field-injection`)
 
-Also fully offline. `--fields` is a required comma-separated list of API
-names; the command doesn't validate them against a describe, so a typo'd
-field name will pass generation and only surface when you deploy the
-metadata. `--fieldset-name` is optional — when omitted, a default is derived
-as `SelectorInclusion_<Fields>` (with a `Fields` suffix), truncated to stay
-within the fieldset API-name length limit. `--label` and `--description` are
-free text written directly into the generated `FieldSet` metadata.
+This is also fully offline. `--fields` is required and is a comma-separated list of API names. APX doesn't check them against a describe, so a typo passes generation and only shows up when you deploy the metadata. `--fieldset-name` is optional. If you leave it out, APX derives `SelectorInclusion_<Fields>` (with a `Fields` suffix) and truncates it to fit the field set API name limit. `--label` and `--description` are free text written straight into the `FieldSet` metadata.
 
-## Dry run, overwrite, and the JSON result shape
+## Dry run, overwrite, and the JSON result
 
-Every command returns `{ baseDir, created, skipped, wouldCreate? }` (plus
-`manualSteps` for the fflib unit-of-work case above):
+Every command returns `{ baseDir, created, skipped, wouldCreate? }`, plus `manualSteps` for the fflib unit-of-work case above.
 
-* **`--dry-run`** short-circuits before any filesystem check — the plan is
-  built and every artifact's target path is reported under `wouldCreate`,
-  but nothing is read from or written to disk. `created`/`skipped` are
-  always empty in this mode.
-* **Without `--dry-run`**, the generation engine's default overwrite policy
-  is `overwrite` — existing files at a planned path are silently replaced.
-  There is no `--no-overwrite`/`--skip-existing` flag exposed on any command
-  today; if you need to detect collisions before writing, run with
-  `--dry-run --json` first and diff `wouldCreate` against what's already on
-  disk.
-* A generation plan is checked for duplicate output paths
-  (`ensureNoPlanCollisions`) before anything is written — two artifacts
-  targeting the same file within one command invocation is a hard error,
-  not a silent last-write-wins.
+* **`--dry-run`** stops before any filesystem check. APX builds the plan and lists every target path under `wouldCreate`. It reads and writes nothing on disk. `created` and `skipped` are always empty.
+* **Without `--dry-run`**, existing files at a planned path are overwritten silently. No command has a `--no-overwrite` or `--skip-existing` flag. To check for collisions first, run with `--dry-run --json` and compare `wouldCreate` with what's on disk.
+* Before writing, APX checks the plan for duplicate output paths. If two artifacts in one run target the same file, that's an error, not a silent last-write-wins.
 
-## Describe and API version resolution
+## Describe and API version
 
-Any command that takes `--target-org` describes the SObject once per
-invocation (no caching across separate CLI invocations). `--api-version`
-overrides the connection's default API version; when omitted, the org
-connection's own default is used, and that resolved value (not the flag) is
-what gets written into generated `-meta.xml` API version fields.
+A command with `--target-org` describes the SObject once per run. Nothing is cached between runs. `--api-version` overrides the connection's default. If you omit it, the org connection's default is used, and that resolved value (not the flag) is what's written into the API version field of generated `-meta.xml` files.
