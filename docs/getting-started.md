@@ -11,7 +11,7 @@ description: Install APX and generate Apex Enterprise Patterns code.
 sf plugins install @syntax-syllogism/apx@x.y.z
 ```
 
-Or build from source (see [Contributing](https://github.com/Syntax-Syllogism/apx/blob/v0.3.4/README.md#contributing)):
+Or build from source (see [Contributing](https://github.com/Syntax-Syllogism/apx/blob/v0.3.5/README.md#contributing)):
 
 ```bash
 git clone git@github.com:jprichter/apx
@@ -84,4 +84,4 @@ See [Offline domain-process generation](command-details.md#offline-domain-proces
 
 * [Command details](command-details.md): flavors, naming and prefixes, binding sequence, domain-process metadata, and dry-run and overwrite behavior.
 * [Dead-code analysis](dead-code.md): find classes nothing references.
-* Every flag: the [Commands](https://github.com/Syntax-Syllogism/apx/blob/v0.3.4/README.md#commands) section of the README, or `--help` on any command.
+* Every flag: the [Commands](https://github.com/Syntax-Syllogism/apx/blob/v0.3.5/README.md#commands) section of the README, or `--help` on any command.

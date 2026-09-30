@@ -132,7 +132,7 @@ Write a manifest for unreferenced classes only, excluding test-only groups:
 sf apx dead --target-org myOrg --classes --destructive-manifest --dead-only
 ```
 
-_See code: [src/commands/apx/dead.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.4/src/commands/apx/dead.ts)_
+_See code: [src/commands/apx/dead.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.5/src/commands/apx/dead.ts)_
 
 ## `sf apx generate`
 
@@ -224,7 +224,7 @@ Generate selector, domain, and unit-of-work in AT4DX style:
 sf apx generate --target-org myOrg --sobject Account --selector --domain --unit-of-work --at4dx
 ```
 
-_See code: [src/commands/apx/generate.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.4/src/commands/apx/generate.ts)_
+_See code: [src/commands/apx/generate.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.5/src/commands/apx/generate.ts)_
 
 ## `sf apx generate action`
 
@@ -306,7 +306,7 @@ Generate action artifacts with defaults:
 sf apx generate action -s Account -c DefaultAccountSloganBasedOnNameAction
 ```
 
-_See code: [src/commands/apx/generate/action.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.4/src/commands/apx/generate/action.ts)_
+_See code: [src/commands/apx/generate/action.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.5/src/commands/apx/generate/action.ts)_
 
 ## `sf apx generate criteria`
 
@@ -388,7 +388,7 @@ Generate criteria artifacts with defaults:
 sf apx generate criteria -s Account -c AccountNameContainsFishCriteria
 ```
 
-_See code: [src/commands/apx/generate/criteria.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.4/src/commands/apx/generate/criteria.ts)_
+_See code: [src/commands/apx/generate/criteria.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.5/src/commands/apx/generate/criteria.ts)_
 
 ## `sf apx generate domain`
 
@@ -464,7 +464,7 @@ Generate AT4DX domain files:
 sf apx generate domain --target-org myOrg --sobject Account --at4dx
 ```
 
-_See code: [src/commands/apx/generate/domain.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.4/src/commands/apx/generate/domain.ts)_
+_See code: [src/commands/apx/generate/domain.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.5/src/commands/apx/generate/domain.ts)_
 
 ## `sf apx generate selector`
 
@@ -546,7 +546,7 @@ Generate fflib selector files with a prefix:
 sf apx generate selector --target-org myOrg --sobject Property__c --fflib --prefix foobar
 ```
 
-_See code: [src/commands/apx/generate/selector.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.4/src/commands/apx/generate/selector.ts)_
+_See code: [src/commands/apx/generate/selector.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.5/src/commands/apx/generate/selector.ts)_
 
 ## `sf apx generate selector field-injection`
 
@@ -616,7 +616,7 @@ Generate field-injection metadata:
 sf apx generate selector field-injection -s Account --fields Name,Industry
 ```
 
-_See code: [src/commands/apx/generate/selector/field-injection.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.4/src/commands/apx/generate/selector/field-injection.ts)_
+_See code: [src/commands/apx/generate/selector/field-injection.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.5/src/commands/apx/generate/selector/field-injection.ts)_
 
 ## `sf apx generate selector method`
 
@@ -684,7 +684,7 @@ Generate selector method scaffolding:
 sf apx generate selector method -c SelectBySloganMethod --sobject-selector-class-name AccountsSelector -s Account
 ```
 
-_See code: [src/commands/apx/generate/selector/method.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.4/src/commands/apx/generate/selector/method.ts)_
+_See code: [src/commands/apx/generate/selector/method.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.5/src/commands/apx/generate/selector/method.ts)_
 
 ## `sf apx generate service`
 
@@ -760,7 +760,7 @@ Generate an AT4DX service set:
 sf apx generate service --target-org myOrg --service-basename LimitMonitors --at4dx
 ```
 
-_See code: [src/commands/apx/generate/service.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.4/src/commands/apx/generate/service.ts)_
+_See code: [src/commands/apx/generate/service.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.5/src/commands/apx/generate/service.ts)_
 
 ## `sf apx generate unitofwork`
 
@@ -840,4 +840,4 @@ Generate AT4DX unit-of-work binding:
 sf apx generate unitofwork --target-org myOrg --sobject Account --at4dx
 ```
 
-_See code: [src/commands/apx/generate/unitofwork.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.4/src/commands/apx/generate/unitofwork.ts)_
+_See code: [src/commands/apx/generate/unitofwork.ts](https://github.com/Syntax-Syllogism/apx/blob/v0.3.5/src/commands/apx/generate/unitofwork.ts)_
