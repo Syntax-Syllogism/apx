@@ -36,9 +36,11 @@ jobs:
       # docs-theme (devDependency) lives on GitHub Packages, and the project
       # .npmrc maps the @syntax-syllogism scope there. Append its token to the
       # user config so the install authenticates without disturbing the npmjs
-      # publish auth that setup-node wrote to the same file.
+      # publish auth that setup-node wrote to the same file. setup-node leaves
+      # no trailing newline, so start with one or the line is glued onto its
+      # last entry and never takes effect.
       - name: Authenticate to GitHub Packages
-        run: echo "//npm.pkg.github.com/:_authToken=${PACKAGES_READ_TOKEN}" >> "$NPM_CONFIG_USERCONFIG"
+        run: printf '\n//npm.pkg.github.com/:_authToken=%s\n' "$PACKAGES_READ_TOKEN" >> "$NPM_CONFIG_USERCONFIG"
         env:
           PACKAGES_READ_TOKEN: ${{ secrets.PACKAGES_READ_TOKEN }}
 
