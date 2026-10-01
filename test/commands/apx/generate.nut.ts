@@ -22,7 +22,7 @@ describe('apx generate NUT', () => {
     if (process.env.NUT_AEP_ENABLE !== 'true') this.skip();
 
     const outputPath = `generated-nut-${Date.now()}`;
-    const repoRoot = fileURLToPath(new URL('../../../../', import.meta.url));
+    const repoRoot = fileURLToPath(new URL('../../../', import.meta.url));
     const projectDir = await mkdtemp(join(tmpdir(), 'apx-nut-'));
     await writeFile(
       join(projectDir, 'sfdx-project.json'),

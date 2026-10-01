@@ -2,12 +2,13 @@ import { existsSync, mkdtempSync } from 'node:fs';
 import { rm } from 'node:fs/promises';
 import { tmpdir } from 'node:os';
 import { join } from 'node:path';
+import { type AepCommandResult } from '@syntax-syllogism/apx-core';
 import { Org, SfProject } from '@salesforce/core';
 import { SfCommand } from '@salesforce/sf-plugins-core';
 import { expect } from 'chai';
 import sinon from 'sinon';
 import { promptRuntime } from '../../../src/aep/prompting.js';
-import type { AepCommandResult } from '../../../src/aep/model/types.js';
+
 import ApxGenerate from '../../../src/commands/apx/generate.js';
 import ApxGenerateAction from '../../../src/commands/apx/generate/action.js';
 import ApxGenerateCriteria from '../../../src/commands/apx/generate/criteria.js';

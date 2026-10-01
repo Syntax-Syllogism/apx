@@ -1,15 +1,15 @@
-import { Messages, SfError } from '@salesforce/core';
-import { SfCommand } from '@salesforce/sf-plugins-core';
+import { resolveOutputBase, resolveProjectApiVersion, generate, type AepCommandResult } from '@syntax-syllogism/apx-core';
+import { Messages } from '@salesforce/core';
+import { runGeneration } from '../../adapters/generation.js';
+import { ApxCommand } from '../../aep/apxCommand.js';
 import {
   assertInteractiveTty,
   flagWasSupplied,
-  requireExactlyOneFlavor,
   requireFlagValue,
   resolveFlagsInteractively,
   resolveOrg,
 } from '../../aep/commandSupport.js';
-import { describeTarget, resolveOutputBase, resolveProjectApiVersion } from '../../aep/commandSupport.js';
-import { GenerationEngine } from '../../aep/engine/engine.js';
+
 import {
   apiVersionFlag,
   at4dxFlag,
@@ -20,7 +20,6 @@ import {
   interactiveTargetOrgFlag,
   outputPathFlag,
   prefixFlag,
-  resolveFlavor,
   selectorToggleFlag,
   sobjectFlag,
   unitOfWorkToggleFlag,
@@ -33,15 +32,11 @@ import {
   promptOptionalText,
   promptText,
 } from '../../aep/prompting.js';
-import type { AepCommandResult } from '../../aep/model/types.js';
-import { buildSObjectNames } from '../../aep/naming/naming.js';
-import { PathResolver } from '../../aep/paths/paths.js';
-import { buildDomainPlan, buildSelectorPlan, buildUnitOfWorkPlan, combinePlans } from '../../aep/plan/planBuilders.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('@syntax-syllogism/apx', 'apx.generate');
 
-export default class ApxGenerate extends SfCommand<AepCommandResult> {
+export default class ApxGenerate extends ApxCommand<AepCommandResult> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
@@ -131,55 +126,6 @@ export default class ApxGenerate extends SfCommand<AepCommandResult> {
     }
     requireFlagValue(flags['target-org'], '--target-org');
     requireFlagValue(flags.sobject, '--sobject');
-    requireExactlyOneFlavor(flags);
-    if (!flags.selector && !flags.domain && !flags['unit-of-work'])
-      throw new SfError(messages.getMessage('errorNothingSelected'));
-    const flavor = resolveFlavor(flags);
-    const { view, apiVersion } = await describeTarget(
-      requireFlagValue(flags['target-org'], '--target-org'),
-      flags['api-version'],
-      requireFlagValue(flags.sobject, '--sobject')
-    );
-    const names = buildSObjectNames({ apiName: view.apiName, isCustom: view.isCustom, prefix: flags.prefix });
-    const paths = new PathResolver();
-
-    const selectorPlan = flags.selector
-      ? buildSelectorPlan({ names, view, flavor, apiVersion, paths, includeBinding: flavor === 'at4dx' })
-      : { artifacts: [] };
-    const domainPlan = flags.domain
-      ? buildDomainPlan({ names, view, flavor, apiVersion, paths, includeBinding: flavor === 'at4dx' })
-      : { artifacts: [] };
-    const unitOfWorkPlan = flags['unit-of-work']
-      ? buildUnitOfWorkPlan({
-          names,
-          flavor,
-          paths,
-          bindingSequenceValue: flags['binding-sequence'] ?? '1000.0',
-        })
-      : { artifacts: [] };
-
-    if (flags['unit-of-work'] && flavor === 'fflib' && !this.jsonEnabled()) {
-      this.log(messages.getMessage('info.fflibSnippet'));
-      this.log(`    ${view.apiName}.SObjectType`);
-    }
-
-    const plan = combinePlans(selectorPlan, domainPlan, unitOfWorkPlan);
-    const baseDir = await resolveOutputBase(requireFlagValue(flags['output-path'], '--output-path'));
-    const manifest = await GenerationEngine.execute(plan, {
-      baseDir,
-      overwrite: 'overwrite',
-      dryRun: flags['dry-run'],
-    });
-    if (!this.jsonEnabled()) {
-      const createdCount = manifest.created.length;
-      const skippedCount = manifest.skipped.length;
-      const dryCount = manifest.wouldCreate?.length ?? 0;
-      this.log(
-        flags['dry-run']
-          ? messages.getMessage('info.dryRunSummary', [dryCount])
-          : messages.getMessage('info.summary', [createdCount, skippedCount])
-      );
-    }
-    return { baseDir, created: manifest.created, skipped: manifest.skipped, wouldCreate: manifest.wouldCreate };
+    return runGeneration(generate, flags, this.jsonEnabled() ? undefined : (line): void => this.log(line));
   }
 }

@@ -1,7 +1,6 @@
 import { Messages, Org } from '@salesforce/core';
 import { Flags } from '@salesforce/sf-plugins-core';
-import type { Flavor } from './model/types.js';
-import { DEFAULT_OUTPUT_PATH } from './commandSupport.js';
+import { DEFAULT_OUTPUT_PATH, TRIGGER_OPERATION_OPTIONS, type Flavor } from '@syntax-syllogism/apx-core';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('@syntax-syllogism/apx', 'apx.flags');
@@ -85,16 +84,6 @@ export const fieldsetNameFlag = Flags.string({
 export const fieldsFlag = Flags.string({
   summary: messages.getMessage('flags.fields.summary'),
 });
-
-export const TRIGGER_OPERATION_OPTIONS = [
-  'Before_Insert',
-  'Before_Update',
-  'Before_Delete',
-  'After_Insert',
-  'After_Update',
-  'After_Delete',
-  'After_Undelete',
-] as const;
 
 export const triggerOperationFlag = Flags.string({
   options: [...TRIGGER_OPERATION_OPTIONS],

@@ -13,7 +13,7 @@ The rules below apply once inputs are resolved, whether from flags or from [inte
 
 `action`, `criteria`, `selector method`, and `selector field-injection` are AT4DX-only offline commands, so they have no flavor flags.
 
-One difference to know about: `apx generate unitofwork --fflib` writes **no** binding file, because fflib has no unit-of-work binding metadata. Instead, the command prints the `Application` factory snippet (the SObjectType to register) for you to add by hand. In the JSON result, `created` and `skipped` are empty and the snippet is under `manualSteps`. Only `--at4dx` writes a `unitOfWorkBinding`.
+One difference to know about: `apx generate unitofwork --fflib` writes **no** binding file, because fflib has no unit-of-work binding metadata. Instead, the command prints the `Application` factory snippet (the SObjectType to register) for you to add by hand. In the JSON result, `created` and `skipped` are empty and the snippet is under `manualSteps`. Only `--at4dx` writes a `unitOfWorkBinding`. The aggregate `apx generate --fflib --unit-of-work` prints the same snippet but, for compatibility, doesn't include `manualSteps` in its JSON result.
 
 ## Naming and `--prefix`
 
@@ -51,12 +51,16 @@ This is also fully offline. `--fields` is required and is a comma-separated list
 
 ## Dry run, overwrite, and the JSON result
 
-Every command returns `{ baseDir, created, skipped, wouldCreate? }`, plus `manualSteps` for the fflib unit-of-work case above.
+Every generation command returns `{ baseDir, created, skipped, wouldCreate? }`, plus `manualSteps` for `generate unitofwork --fflib` (see above).
 
-* **`--dry-run`** stops before any filesystem check. APX builds the plan and lists every target path under `wouldCreate`. It reads and writes nothing on disk. `created` and `skipped` are always empty.
+* **`--dry-run`** builds and validates the plan and lists every target path under `wouldCreate`, without checking whether the output files exist or writing them. Project resolution and interactive API-version defaults can still read project configuration, and commands that describe an SObject still contact the org. `created` and `skipped` are always empty.
 * **Without `--dry-run`**, existing files at a planned path are overwritten silently. No command has a `--no-overwrite` or `--skip-existing` flag. To check for collisions first, run with `--dry-run --json` and compare `wouldCreate` with what's on disk.
 * Before writing, APX checks the plan for duplicate output paths. If two artifacts in one run target the same file, that's an error, not a silent last-write-wins.
 
 ## Describe and API version
 
-A command with `--target-org` describes the SObject once per run. Nothing is cached between runs. `--api-version` overrides the connection's default. If you omit it, the org connection's default is used, and that resolved value (not the flag) is what's written into the API version field of generated `-meta.xml` files.
+`generate`, `domain`, `selector`, and `unitofwork` refresh org authentication and describe the SObject once per run. Nothing is cached between runs. `--api-version` selects the connection version; otherwise the connection's default is used. That resolved version is written into generated Apex and trigger `-meta.xml` files.
+
+`service` never describes an SObject. Its API-version precedence is the explicit flag, then the optional org connection's version, then `60.0`. It refreshes authentication and obtains the connection only when an org is supplied and no explicit version is set.
+
+Offline `action`, `criteria`, and `selector method` use the explicit version or `60.0`. `selector field-injection` has no API-version flag. In interactive mode, the API-version prompt is prefilled from the project's `sourceApiVersion`; accepting that value supplies it to generation. Non-interactive commands do not use `sourceApiVersion` as a fallback.

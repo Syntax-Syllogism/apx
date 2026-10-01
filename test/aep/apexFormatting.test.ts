@@ -1,16 +1,18 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { expect } from 'chai';
-import { toDescribeView } from '../../src/aep/describe/describe.js';
-import { buildSelectorMethodNames, buildServiceNames, buildSObjectNames } from '../../src/aep/naming/naming.js';
-import { PathResolver } from '../../src/aep/paths/paths.js';
 import {
+  toDescribeView,
+  buildSelectorMethodNames,
+  buildServiceNames,
+  buildSObjectNames,
+  PathResolver,
   buildDomainPlan,
   buildSelectorMethodPlan,
   buildSelectorPlan,
   buildServicePlan,
   combinePlans,
-} from '../../src/aep/plan/planBuilders.js';
+} from '@syntax-syllogism/apx-core';
+import { expect } from 'chai';
 
 const readJson = <T>(file: string): T => JSON.parse(readFileSync(file, 'utf8')) as T;
 

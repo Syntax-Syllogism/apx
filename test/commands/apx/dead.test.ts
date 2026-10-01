@@ -1,5 +1,5 @@
 import { existsSync, mkdtempSync, readFileSync } from 'node:fs';
-import { rm } from 'node:fs/promises';
+import { rm, writeFile } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { SfProject } from '@salesforce/core';
@@ -150,6 +150,26 @@ describe('apx dead', () => {
     await rm(harness.projectDir, { recursive: true, force: true });
   });
 
+  it('preserves filesystem errors when a destructive manifest cannot be written', async () => {
+    const harness = createHarness();
+    const blockedOutput = join(harness.projectDir, 'blocked');
+    await writeFile(blockedOutput, 'a file, not a directory');
+    stubParse(flagsFor(harness.org, { 'destructive-manifest': true, 'output-path': blockedOutput }));
+    const previousExitCode = process.exitCode;
+    let caught: unknown;
+    try {
+      await ApxDead.run(['--json']);
+    } catch (error) {
+      caught = error;
+    } finally {
+      process.exitCode = previousExitCode;
+      await rm(harness.projectDir, { recursive: true, force: true });
+    }
+    expect(caught).to.include({ name: 'Error', code: 'ENOTDIR', exitCode: 1 });
+    expect((caught as Error).message).to.include('ENOTDIR');
+    expect((caught as Error).message).to.not.include('Failed to write artifact');
+  });
+
   it('reports manifest paths without writing them in dry-run mode', async () => {
     const harness = createHarness();
     stubParse(flagsFor(harness.org, { 'destructive-manifest': true, 'dry-run': true }));
@@ -225,10 +245,13 @@ describe('apx dead', () => {
 
     await ApxDead.run([]);
 
-    expect(output.table.calledOnce).to.equal(true);
-    const tableOptions = output.table.firstCall.args[0] as { title?: string; columns?: string[] };
-    expect(tableOptions).to.include({ title: 'SUPPRESSED' });
-    expect(tableOptions.columns).to.include('WOULD BE DEAD');
+    const lines = output.log.args.map(([message]) => String(message));
+    const title = lines.indexOf('SUPPRESSED');
+    expect(title).to.be.greaterThan(-1);
+    expect(lines[title + 1]).to.match(/^┌─+┬─+┬─+┐$/);
+    expect(lines[title + 2]).to.match(/^│ Class\s+│ Reason\s+│ Would Be Dead │$/);
+    expect(lines.some((line) => /^│ LiveEntry\s+│ .+ │ (yes|no)\s+│$/.test(line))).to.equal(true);
+    expect(output.table.called).to.equal(false);
     await rm(harness.projectDir, { recursive: true, force: true });
   });
 

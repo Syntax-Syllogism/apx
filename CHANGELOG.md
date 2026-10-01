@@ -1,5 +1,16 @@
 # Changelog
 
+## [0.4.0] - 2026-10-01
+
+### Added
+
+- Commands now run as adapters over apx-core
+
+### Fixed
+
+- Fixed Node.js engine requirement to align with apx-core
+- Restored apx dead output parity with apx-core 0.3.1
+
 ## [0.3.5] - 2026-09-30
 
 ### Changed

@@ -1,14 +1,9 @@
+import { resolveOutputBase, resolveProjectApiVersion, generateSelectorMethod, type AepCommandResult } from '@syntax-syllogism/apx-core';
 import { Messages } from '@salesforce/core';
-import { SfCommand } from '@salesforce/sf-plugins-core';
-import {
-  DEFAULT_API_VERSION,
-  assertInteractiveTty,
-  requireFlagValue,
-  resolveFlagsInteractively,
-  resolveOutputBase,
-  resolveProjectApiVersion,
-} from '../../../../aep/commandSupport.js';
-import { GenerationEngine } from '../../../../aep/engine/engine.js';
+import { runGeneration } from '../../../../adapters/generation.js';
+import { ApxCommand } from '../../../../aep/apxCommand.js';
+import { assertInteractiveTty, requireFlagValue, resolveFlagsInteractively } from '../../../../aep/commandSupport.js';
+
 import {
   apiVersionFlag,
   classNameFlag,
@@ -19,15 +14,11 @@ import {
   sobjectFlag,
 } from '../../../../aep/flags.js';
 import { promptBoolean, promptOptionalText, promptText } from '../../../../aep/prompting.js';
-import type { AepCommandResult } from '../../../../aep/model/types.js';
-import { buildSelectorMethodNames } from '../../../../aep/naming/naming.js';
-import { PathResolver } from '../../../../aep/paths/paths.js';
-import { buildSelectorMethodPlan } from '../../../../aep/plan/planBuilders.js';
 
 Messages.importMessagesDirectoryFromMetaUrl(import.meta.url);
 const messages = Messages.loadMessages('@syntax-syllogism/apx', 'apx.generate.selector.method');
 
-export default class ApxGenerateSelectorMethod extends SfCommand<AepCommandResult> {
+export default class ApxGenerateSelectorMethod extends ApxCommand<AepCommandResult> {
   public static readonly summary = messages.getMessage('summary');
   public static readonly description = messages.getMessage('description');
   public static readonly examples = messages.getMessages('examples');
@@ -77,25 +68,6 @@ export default class ApxGenerateSelectorMethod extends SfCommand<AepCommandResul
     requireFlagValue(flags.sobject, '--sobject');
     requireFlagValue(flags['class-name'], '--class-name');
     requireFlagValue(flags['sobject-selector-class-name'], '--sobject-selector-class-name');
-    const names = buildSelectorMethodNames({
-      className: requireFlagValue(flags['class-name'], '--class-name'),
-      sobjectApiName: requireFlagValue(flags.sobject, '--sobject'),
-      sobjectSelectorClassName: requireFlagValue(flags['sobject-selector-class-name'], '--sobject-selector-class-name'),
-    });
-    const plan = buildSelectorMethodPlan({
-      names,
-      flavor: 'at4dx',
-      apiVersion: flags['api-version'] ?? DEFAULT_API_VERSION,
-      paths: new PathResolver(),
-    });
-    const baseDir = await resolveOutputBase(requireFlagValue(flags['output-path'], '--output-path'));
-    const manifest = await GenerationEngine.execute(plan, {
-      baseDir,
-      overwrite: 'overwrite',
-      dryRun: flags['dry-run'],
-    });
-    if (!this.jsonEnabled())
-      this.log(messages.getMessage('info.created', [manifest.created.length, manifest.skipped.length]));
-    return { baseDir, created: manifest.created, skipped: manifest.skipped, wouldCreate: manifest.wouldCreate };
+    return runGeneration(generateSelectorMethod, flags, this.jsonEnabled() ? undefined : (line): void => this.log(line));
   }
 }

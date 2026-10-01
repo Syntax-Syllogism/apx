@@ -1,17 +1,14 @@
 import { readFileSync } from 'node:fs';
 import { join } from 'node:path';
-import { expect } from 'chai';
-import { toDescribeView } from '../../src/aep/describe/describe.js';
 import {
+  toDescribeView,
   buildActionNames,
   buildCriteriaNames,
   buildFieldInjectionNames,
   buildSelectorMethodNames,
   buildServiceNames,
   buildSObjectNames,
-} from '../../src/aep/naming/naming.js';
-import { PathResolver } from '../../src/aep/paths/paths.js';
-import {
+  PathResolver,
   buildActionPlan,
   buildCriteriaPlan,
   buildDomainPlan,
@@ -20,7 +17,8 @@ import {
   buildSelectorPlan,
   buildServicePlan,
   buildUnitOfWorkPlan,
-} from '../../src/aep/plan/planBuilders.js';
+} from '@syntax-syllogism/apx-core';
+import { expect } from 'chai';
 
 const readJson = <T>(file: string): T => JSON.parse(readFileSync(file, 'utf8')) as T;
 

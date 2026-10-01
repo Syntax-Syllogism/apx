@@ -12,5 +12,6 @@ APX is a Salesforce CLI plugin. It generates Apex Enterprise Patterns code (ffli
 - [Command details](command-details.md): flavors, naming, binding metadata, and dry runs.
 - [CLI reference](cli-reference.md): every command with its usage, flags, and examples.
 - [Dead-code analysis](dead-code.md): review unreferenced classes and build a safe destructive manifest.
+- [Architecture](architecture.md): contributor guidance on the plugin/core boundary and compatibility checks.
 
 For every flag, see the [CLI reference](cli-reference.md) or run a command with `--help`.

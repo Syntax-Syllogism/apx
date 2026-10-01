@@ -22,7 +22,7 @@ describe('apx at4dx injection NUT', () => {
     if (process.env.NUT_AEP_ENABLE !== 'true') this.skip();
 
     const outputPath = `generated-nut-injection-${Date.now()}`;
-    const repoRoot = fileURLToPath(new URL('../../../../../', import.meta.url));
+    const repoRoot = fileURLToPath(new URL('../../../../', import.meta.url));
     const projectDir = await mkdtemp(join(tmpdir(), 'apx-at4dx-injection-'));
     await writeFile(
       join(projectDir, 'sfdx-project.json'),
@@ -101,7 +101,8 @@ describe('apx at4dx injection NUT', () => {
       'test/classes/criteria/AccountNameContainsFishCriteriaTest.cls',
       'main/schema/custommetadata/applicationFactoryBindings/domainProcessBindings/DomainProcessBinding.AccountNameContainsFishCriteria.md-meta.xml',
       'main/classes/actions/DefaultAccountSloganBasedOnNameAction.cls',
-      'test/classes/actions/DefaultAccountSloganBasedOnNameActionTest.cls',
+      // Apex class names cap at 40 characters, so the generator truncates the test class name.
+      'test/classes/actions/DefaultAccountSloganBasedOnNameActioTest.cls',
       'main/schema/custommetadata/applicationFactoryBindings/domainProcessBindings/DomainProcessBinding.DefaultAccountSloganBasedOnNameAction.md-meta.xml',
       'main/schema/objects/Account/fieldSets/SelectorInclusion_AccountFields.fieldSet-meta.xml',
       'main/schema/custommetadata/applicationFactoryBindings/selectorConfigFieldSetInclusions/SelectorConfig_FieldSetInclusion.SelectorInclusion_AccountFields.md-meta.xml',

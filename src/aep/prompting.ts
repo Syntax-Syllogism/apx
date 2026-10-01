@@ -1,6 +1,6 @@
 import { checkbox, confirm, input, select } from '@inquirer/prompts';
 import { SfError } from '@salesforce/core';
-import { TRIGGER_OPERATION_OPTIONS } from './flags.js';
+import { TRIGGER_OPERATION_OPTIONS } from '@syntax-syllogism/apx-core';
 
 export const promptRuntime = { checkbox, confirm, input, select };
 
