@@ -66,6 +66,10 @@ export default class ApxGenerateSelectorFieldInjection extends ApxCommand<AepCom
     }
     requireFlagValue(flags.sobject, '--sobject');
     requireFlagValue(flags.fields, '--fields');
-    return runGeneration(generateSelectorFieldInjection, flags, this.jsonEnabled() ? undefined : (line): void => this.log(line));
+    return runGeneration(
+      generateSelectorFieldInjection,
+      flags,
+      this.jsonEnabled() ? undefined : (line): void => this.log(line)
+    );
   }
 }

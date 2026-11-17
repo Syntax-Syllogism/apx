@@ -1,268 +1,206 @@
 [
-    {
-        "alias": [],
-        "command": "apx:dead",
-        "flagAliases": [],
-        "flagChars": [
-            "a",
-            "c",
-            "o",
-            "p"
-        ],
-        "flags": [
-            "api-version",
-            "classes",
-            "dead-only",
-            "destructive-manifest",
-            "dry-run",
-            "flags-dir",
-            "ignore",
-            "include-suppressed",
-            "json",
-            "output-path",
-            "target-org"
-        ],
-        "plugin": "@syntax-syllogism/apx"
-    },
-    {
-        "alias": [],
-        "command": "apx:generate",
-        "flagAliases": [],
-        "flagChars": [
-            "a",
-            "b",
-            "d",
-            "i",
-            "o",
-            "p",
-            "r",
-            "s",
-            "u"
-        ],
-        "flags": [
-            "api-version",
-            "at4dx",
-            "binding-sequence",
-            "domain",
-            "dry-run",
-            "fflib",
-            "flags-dir",
-            "interactive",
-            "json",
-            "output-path",
-            "prefix",
-            "selector",
-            "sobject",
-            "target-org",
-            "unit-of-work"
-        ],
-        "plugin": "@syntax-syllogism/apx"
-    },
-    {
-        "alias": [],
-        "command": "apx:generate:action",
-        "flagAliases": [],
-        "flagChars": [
-            "a",
-            "c",
-            "i",
-            "p",
-            "s"
-        ],
-        "flags": [
-            "api-version",
-            "class-name",
-            "description",
-            "dry-run",
-            "flags-dir",
-            "interactive",
-            "json",
-            "order",
-            "output-path",
-            "process-name",
-            "sobject",
-            "trigger-operation"
-        ],
-        "plugin": "@syntax-syllogism/apx"
-    },
-    {
-        "alias": [],
-        "command": "apx:generate:criteria",
-        "flagAliases": [],
-        "flagChars": [
-            "a",
-            "c",
-            "i",
-            "p",
-            "s"
-        ],
-        "flags": [
-            "api-version",
-            "class-name",
-            "description",
-            "dry-run",
-            "flags-dir",
-            "interactive",
-            "json",
-            "order",
-            "output-path",
-            "process-name",
-            "sobject",
-            "trigger-operation"
-        ],
-        "plugin": "@syntax-syllogism/apx"
-    },
-    {
-        "alias": [],
-        "command": "apx:generate:domain",
-        "flagAliases": [],
-        "flagChars": [
-            "a",
-            "i",
-            "o",
-            "p",
-            "s"
-        ],
-        "flags": [
-            "api-version",
-            "at4dx",
-            "dry-run",
-            "fflib",
-            "flags-dir",
-            "interactive",
-            "json",
-            "output-path",
-            "prefix",
-            "sobject",
-            "target-org"
-        ],
-        "plugin": "@syntax-syllogism/apx"
-    },
-    {
-        "alias": [],
-        "command": "apx:generate:selector",
-        "flagAliases": [],
-        "flagChars": [
-            "a",
-            "i",
-            "o",
-            "p",
-            "s"
-        ],
-        "flags": [
-            "api-version",
-            "at4dx",
-            "dry-run",
-            "fflib",
-            "flags-dir",
-            "interactive",
-            "json",
-            "output-path",
-            "prefix",
-            "sobject",
-            "target-org"
-        ],
-        "plugin": "@syntax-syllogism/apx"
-    },
-    {
-        "alias": [],
-        "command": "apx:generate:selector:field-injection",
-        "flagAliases": [],
-        "flagChars": [
-            "i",
-            "p",
-            "s"
-        ],
-        "flags": [
-            "description",
-            "dry-run",
-            "fields",
-            "fieldset-name",
-            "flags-dir",
-            "interactive",
-            "json",
-            "label",
-            "output-path",
-            "sobject"
-        ],
-        "plugin": "@syntax-syllogism/apx"
-    },
-    {
-        "alias": [],
-        "command": "apx:generate:selector:method",
-        "flagAliases": [],
-        "flagChars": [
-            "a",
-            "c",
-            "i",
-            "p",
-            "s"
-        ],
-        "flags": [
-            "api-version",
-            "class-name",
-            "dry-run",
-            "flags-dir",
-            "interactive",
-            "json",
-            "output-path",
-            "sobject",
-            "sobject-selector-class-name"
-        ],
-        "plugin": "@syntax-syllogism/apx"
-    },
-    {
-        "alias": [],
-        "command": "apx:generate:service",
-        "flagAliases": [],
-        "flagChars": [
-            "a",
-            "i",
-            "o",
-            "p"
-        ],
-        "flags": [
-            "api-version",
-            "at4dx",
-            "dry-run",
-            "fflib",
-            "flags-dir",
-            "interactive",
-            "json",
-            "output-path",
-            "prefix",
-            "service-basename",
-            "target-org"
-        ],
-        "plugin": "@syntax-syllogism/apx"
-    },
-    {
-        "alias": [],
-        "command": "apx:generate:unitofwork",
-        "flagAliases": [],
-        "flagChars": [
-            "a",
-            "b",
-            "i",
-            "o",
-            "p",
-            "s"
-        ],
-        "flags": [
-            "api-version",
-            "at4dx",
-            "binding-sequence",
-            "dry-run",
-            "fflib",
-            "flags-dir",
-            "interactive",
-            "json",
-            "output-path",
-            "prefix",
-            "sobject",
-            "target-org"
-        ],
-        "plugin": "@syntax-syllogism/apx"
-    }
+  {
+    "alias": [],
+    "command": "apx:dead",
+    "flagAliases": [],
+    "flagChars": ["a", "c", "o", "p"],
+    "flags": [
+      "api-version",
+      "classes",
+      "dead-only",
+      "destructive-manifest",
+      "dry-run",
+      "flags-dir",
+      "ignore",
+      "include-suppressed",
+      "json",
+      "output-path",
+      "target-org"
+    ],
+    "plugin": "@syntax-syllogism/apx"
+  },
+  {
+    "alias": [],
+    "command": "apx:generate",
+    "flagAliases": [],
+    "flagChars": ["a", "b", "d", "i", "o", "p", "r", "s", "u"],
+    "flags": [
+      "api-version",
+      "at4dx",
+      "binding-sequence",
+      "domain",
+      "dry-run",
+      "fflib",
+      "flags-dir",
+      "interactive",
+      "json",
+      "output-path",
+      "prefix",
+      "selector",
+      "sobject",
+      "target-org",
+      "unit-of-work"
+    ],
+    "plugin": "@syntax-syllogism/apx"
+  },
+  {
+    "alias": [],
+    "command": "apx:generate:action",
+    "flagAliases": [],
+    "flagChars": ["a", "c", "i", "p", "s"],
+    "flags": [
+      "api-version",
+      "class-name",
+      "description",
+      "dry-run",
+      "flags-dir",
+      "interactive",
+      "json",
+      "order",
+      "output-path",
+      "process-name",
+      "sobject",
+      "trigger-operation"
+    ],
+    "plugin": "@syntax-syllogism/apx"
+  },
+  {
+    "alias": [],
+    "command": "apx:generate:criteria",
+    "flagAliases": [],
+    "flagChars": ["a", "c", "i", "p", "s"],
+    "flags": [
+      "api-version",
+      "class-name",
+      "description",
+      "dry-run",
+      "flags-dir",
+      "interactive",
+      "json",
+      "order",
+      "output-path",
+      "process-name",
+      "sobject",
+      "trigger-operation"
+    ],
+    "plugin": "@syntax-syllogism/apx"
+  },
+  {
+    "alias": [],
+    "command": "apx:generate:domain",
+    "flagAliases": [],
+    "flagChars": ["a", "i", "o", "p", "s"],
+    "flags": [
+      "api-version",
+      "at4dx",
+      "dry-run",
+      "fflib",
+      "flags-dir",
+      "interactive",
+      "json",
+      "output-path",
+      "prefix",
+      "sobject",
+      "target-org"
+    ],
+    "plugin": "@syntax-syllogism/apx"
+  },
+  {
+    "alias": [],
+    "command": "apx:generate:selector",
+    "flagAliases": [],
+    "flagChars": ["a", "i", "o", "p", "s"],
+    "flags": [
+      "api-version",
+      "at4dx",
+      "dry-run",
+      "fflib",
+      "flags-dir",
+      "interactive",
+      "json",
+      "output-path",
+      "prefix",
+      "sobject",
+      "target-org"
+    ],
+    "plugin": "@syntax-syllogism/apx"
+  },
+  {
+    "alias": [],
+    "command": "apx:generate:selector:field-injection",
+    "flagAliases": [],
+    "flagChars": ["i", "p", "s"],
+    "flags": [
+      "description",
+      "dry-run",
+      "fields",
+      "fieldset-name",
+      "flags-dir",
+      "interactive",
+      "json",
+      "label",
+      "output-path",
+      "sobject"
+    ],
+    "plugin": "@syntax-syllogism/apx"
+  },
+  {
+    "alias": [],
+    "command": "apx:generate:selector:method",
+    "flagAliases": [],
+    "flagChars": ["a", "c", "i", "p", "s"],
+    "flags": [
+      "api-version",
+      "class-name",
+      "dry-run",
+      "flags-dir",
+      "interactive",
+      "json",
+      "output-path",
+      "sobject",
+      "sobject-selector-class-name"
+    ],
+    "plugin": "@syntax-syllogism/apx"
+  },
+  {
+    "alias": [],
+    "command": "apx:generate:service",
+    "flagAliases": [],
+    "flagChars": ["a", "i", "o", "p"],
+    "flags": [
+      "api-version",
+      "at4dx",
+      "dry-run",
+      "fflib",
+      "flags-dir",
+      "interactive",
+      "json",
+      "output-path",
+      "prefix",
+      "service-basename",
+      "target-org"
+    ],
+    "plugin": "@syntax-syllogism/apx"
+  },
+  {
+    "alias": [],
+    "command": "apx:generate:unitofwork",
+    "flagAliases": [],
+    "flagChars": ["a", "b", "i", "o", "p", "s"],
+    "flags": [
+      "api-version",
+      "at4dx",
+      "binding-sequence",
+      "dry-run",
+      "fflib",
+      "flags-dir",
+      "interactive",
+      "json",
+      "output-path",
+      "prefix",
+      "sobject",
+      "target-org"
+    ],
+    "plugin": "@syntax-syllogism/apx"
+  }
 ]
-

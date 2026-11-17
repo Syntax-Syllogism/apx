@@ -2,10 +2,7 @@ import { defineConfig } from 'astro/config';
 import { unified } from '@astrojs/markdown-remark';
 import starlight from '@astrojs/starlight';
 import starlightLinksValidator from 'starlight-links-validator';
-import {
-  remarkRelativeMdLinks,
-  starlightPreset,
-} from '@syntax-syllogism/docs-theme';
+import { remarkRelativeMdLinks, starlightPreset } from '@syntax-syllogism/docs-theme';
 import { fileURLToPath } from 'node:url';
 
 const BASE = '/apx/docs';
@@ -22,18 +19,16 @@ export default defineConfig({
     }),
   },
   integrations: [
-    starlight(
-      {
-        ...starlightPreset({
-          title: 'APX',
-          base: BASE,
-          toolSlug: 'apx',
-          publicRepo: 'Syntax-Syllogism/apx',
-          accent: 'orange',
-        }),
-        sidebar: ['index', 'getting-started', 'interactive-mode', 'command-details', 'cli-reference', 'dead-code'],
-      },
-    ),
+    starlight({
+      ...starlightPreset({
+        title: 'APX',
+        base: BASE,
+        toolSlug: 'apx',
+        publicRepo: 'Syntax-Syllogism/apx',
+        accent: 'orange',
+      }),
+      sidebar: ['index', 'getting-started', 'interactive-mode', 'command-details', 'cli-reference', 'dead-code'],
+    }),
     starlightLinksValidator(),
   ],
 });

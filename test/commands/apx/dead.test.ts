@@ -45,14 +45,16 @@ const defaultFixture = (): Fixture => ({
     { Id: 'test', Name: 'WeatherServiceTest', NamespacePrefix: null },
   ],
   symbols: { dead: plainSymbol(), test: testSymbol() },
-  dependencies: [{
-    MetadataComponentId: 'test',
-    MetadataComponentName: 'WeatherServiceTest',
-    MetadataComponentType: 'ApexClass',
-    RefMetadataComponentId: 'dead',
-    RefMetadataComponentName: 'WeatherService',
-    RefMetadataComponentType: 'ApexClass',
-  }],
+  dependencies: [
+    {
+      MetadataComponentId: 'test',
+      MetadataComponentName: 'WeatherServiceTest',
+      MetadataComponentType: 'ApexClass',
+      RefMetadataComponentId: 'dead',
+      RefMetadataComponentName: 'WeatherService',
+      RefMetadataComponentType: 'ApexClass',
+    },
+  ],
   bindings: [],
 });
 
@@ -211,7 +213,8 @@ describe('apx dead', () => {
       methods: [{ name: 'invoke', annotations: [{ name: 'AuraEnabled' }], modifiers: [] }],
     };
     fixture.symbols.otherTest = testSymbol();
-    fixture.bindings = [{ DeveloperName: 'IService', 'To__c': 'BoundImpl', 'BindingInterface__c': null }];
+    // eslint-disable-next-line camelcase -- Salesforce custom field names
+    fixture.bindings = [{ DeveloperName: 'IService', To__c: 'BoundImpl', BindingInterface__c: null }];
 
     const first = createHarness(fixture);
     stubParse(flagsFor(first.org, { 'destructive-manifest': true }));
@@ -275,14 +278,18 @@ describe('apx dead', () => {
     stubParse(flagsFor(available.org));
     await ApxDead.run([]);
     expect(availableOutput.log.args.some(([message]) => message === 'Binding sources consulted:')).to.equal(true);
-    expect(availableOutput.warn.args.some(([message]) => String(message).includes('No AT4DX binding objects'))).to.equal(false);
+    expect(
+      availableOutput.warn.args.some(([message]) => String(message).includes('No AT4DX binding objects'))
+    ).to.equal(false);
     await rm(available.projectDir, { recursive: true, force: true });
 
     const missing = createHarness({ ...defaultFixture(), missingBindings: true });
     const missingOutput = stubOutput();
     stubParse(flagsFor(missing.org));
     await ApxDead.run([]);
-    expect(missingOutput.warn.args.some(([message]) => String(message).includes('No AT4DX binding objects'))).to.equal(true);
+    expect(missingOutput.warn.args.some(([message]) => String(message).includes('No AT4DX binding objects'))).to.equal(
+      true
+    );
     await rm(missing.projectDir, { recursive: true, force: true });
   });
 
@@ -303,8 +310,22 @@ describe('apx dead', () => {
       ],
       symbols: { a: plainSymbol(), b: plainSymbol(), c: plainSymbol() },
       dependencies: [
-        { MetadataComponentId: 'a', MetadataComponentName: 'A', MetadataComponentType: 'ApexClass', RefMetadataComponentId: 'b', RefMetadataComponentName: 'B', RefMetadataComponentType: 'ApexClass' },
-        { MetadataComponentId: 'b', MetadataComponentName: 'B', MetadataComponentType: 'ApexClass', RefMetadataComponentId: 'c', RefMetadataComponentName: 'C', RefMetadataComponentType: 'ApexClass' },
+        {
+          MetadataComponentId: 'a',
+          MetadataComponentName: 'A',
+          MetadataComponentType: 'ApexClass',
+          RefMetadataComponentId: 'b',
+          RefMetadataComponentName: 'B',
+          RefMetadataComponentType: 'ApexClass',
+        },
+        {
+          MetadataComponentId: 'b',
+          MetadataComponentName: 'B',
+          MetadataComponentType: 'ApexClass',
+          RefMetadataComponentId: 'c',
+          RefMetadataComponentName: 'C',
+          RefMetadataComponentType: 'ApexClass',
+        },
       ],
     };
     const cascadeHarness = createHarness(fixture);

@@ -1,4 +1,9 @@
-import { resolveOutputBase, resolveProjectApiVersion, generateSelector, type AepCommandResult } from '@syntax-syllogism/apx-core';
+import {
+  resolveOutputBase,
+  resolveProjectApiVersion,
+  generateSelector,
+  type AepCommandResult,
+} from '@syntax-syllogism/apx-core';
 import { Messages } from '@salesforce/core';
 import { runGeneration } from '../../../adapters/generation.js';
 import { ApxCommand } from '../../../aep/apxCommand.js';

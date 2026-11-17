@@ -1,5 +1,11 @@
 # Changelog
 
+## [0.4.1] - 2026-11-17
+
+### Security
+
+- Resolved critical and high severity dependency vulnerabilities flagged by Dependabot
+
 ## [0.4.0] - 2026-10-01
 
 ### Added

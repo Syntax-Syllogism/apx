@@ -31,7 +31,10 @@ describe('CLI option adapters', () => {
 
   it('maps the flavor booleans through the CLI rules', () => {
     const base = { sobject: 'Account', 'output-path': 'force-app' };
-    expect(toOptions(generateSelector.descriptor, { ...base, at4dx: true })).to.include({ flavor: 'at4dx', sobject: 'Account' });
+    expect(toOptions(generateSelector.descriptor, { ...base, at4dx: true })).to.include({
+      flavor: 'at4dx',
+      sobject: 'Account',
+    });
     expect(toOptions(generateSelector.descriptor, { ...base, fflib: true })).to.include({ flavor: 'fflib' });
     for (const flags of [base, { ...base, at4dx: true, fflib: true }]) {
       expect(cliError(() => toOptions(generateSelector.descriptor, flags)).message).to.equal(
@@ -64,7 +67,10 @@ describe('CLI option adapters', () => {
       parse: () =>
         parseOptionsForCli(
           generateCriteria.descriptor.optionsSchema,
-          toOptions(generateCriteria.descriptor, { sobject: 'Account', 'class-name': 'AccountNameContainsFishCriteriaWithLongName' })
+          toOptions(generateCriteria.descriptor, {
+            sobject: 'Account',
+            'class-name': 'AccountNameContainsFishCriteriaWithLongName',
+          })
         ),
       message: 'is longer than the 40-character Salesforce limit.',
     },
@@ -93,12 +99,16 @@ describe('CLI option adapters', () => {
     {
       name: 'nothing selected',
       parse: () =>
-        parseOptionsForCli(generate.descriptor.optionsSchema, toOptions(generate.descriptor, { sobject: 'Account', fflib: true })),
+        parseOptionsForCli(
+          generate.descriptor.optionsSchema,
+          toOptions(generate.descriptor, { sobject: 'Account', fflib: true })
+        ),
       message: 'Select at least one artifact group: --selector, --domain, or --unit-of-work.',
     },
     {
       name: 'dead without --classes',
-      parse: () => parseOptionsForCli(dead.descriptor.optionsSchema, toOptions(dead.descriptor, { 'destructive-manifest': true })),
+      parse: () =>
+        parseOptionsForCli(dead.descriptor.optionsSchema, toOptions(dead.descriptor, { 'destructive-manifest': true })),
       message: '--destructive-manifest requires --classes.',
     },
   ];
@@ -125,7 +135,7 @@ describe('splitDeadReport', () => {
       withoutSymbolTable: 1,
       bindingSources: [{ object: 'di_Binding__mdt', available: false, recordCount: 0 }],
       ...overrides,
-    }) as unknown as DeadCodeResult;
+    } as unknown as DeadCodeResult);
 
   it('keeps multi-line warnings whole and logs every other line', () => {
     const blocks = splitDeadReport(renderDeadCodeReport(result()));
@@ -144,7 +154,10 @@ describe('splitDeadReport', () => {
   it('ends the warnings at the summary when there are no tables', () => {
     const blocks = splitDeadReport(renderDeadCodeReport(result({ dead: [], withoutSymbolTable: 0 })));
     expect(blocks.filter(({ warning }) => warning)).to.have.length(2);
-    expect(blocks.at(-2)).to.include({ warning: false }).and.to.have.property('text').that.match(/^Scanned 1 classes/);
+    expect(blocks.at(-2))
+      .to.include({ warning: false })
+      .and.to.have.property('text')
+      .that.match(/^Scanned 1 classes/);
     expect(blocks.at(-1)).to.deep.equal({ warning: false, text: 'No dead classes found.' });
   });
 });

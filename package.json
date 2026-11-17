@@ -1,7 +1,7 @@
 {
   "name": "@syntax-syllogism/apx",
   "description": "a sf cli plugin for Apex Enterprise Patterns (fflib/at4dx) code generation",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "packageManager": "yarn@1.22.22",
   "repository": {
     "type": "git",
@@ -19,8 +19,10 @@
     "@syntax-syllogism/apx-core": "0.3.1"
   },
   "devDependencies": {
+    "@commitlint/cli": "^17.8.1",
+    "@commitlint/config-conventional": "^17.8.1",
     "@oclif/plugin-command-snapshot": "^5.4.0",
-    "@salesforce/cli-plugins-testkit": "^5.3.10",
+    "@salesforce/cli-plugins-testkit": "^5.3.76",
     "@salesforce/dev-scripts": "^10",
     "@syntax-syllogism/docs-theme": "^0.4.0",
     "c8": "^11.0.0",
@@ -28,9 +30,15 @@
     "husky": "^9.1.7",
     "lint-staged": "15",
     "markdownlint-cli2": "^0.23.3",
-    "oclif": "^4.23.29",
+    "oclif": "^4.24.0",
     "ts-node": "^10.9.2",
     "typescript": "^5.9.3"
+  },
+  "resolutions": {
+    "**/mocha/js-yaml": "^4.3.2",
+    "**/mocha/minimatch": "^5.1.8",
+    "**/mocha/serialize-javascript": "^7.0.3",
+    "**/@typescript-eslint/typescript-estree/minimatch": "^9.0.7"
   },
   "engines": {
     "node": ">=22.0.0"

@@ -1,4 +1,9 @@
-import { resolveOutputBase, resolveProjectApiVersion, generateSelectorMethod, type AepCommandResult } from '@syntax-syllogism/apx-core';
+import {
+  resolveOutputBase,
+  resolveProjectApiVersion,
+  generateSelectorMethod,
+  type AepCommandResult,
+} from '@syntax-syllogism/apx-core';
 import { Messages } from '@salesforce/core';
 import { runGeneration } from '../../../../adapters/generation.js';
 import { ApxCommand } from '../../../../aep/apxCommand.js';
@@ -68,6 +73,10 @@ export default class ApxGenerateSelectorMethod extends ApxCommand<AepCommandResu
     requireFlagValue(flags.sobject, '--sobject');
     requireFlagValue(flags['class-name'], '--class-name');
     requireFlagValue(flags['sobject-selector-class-name'], '--sobject-selector-class-name');
-    return runGeneration(generateSelectorMethod, flags, this.jsonEnabled() ? undefined : (line): void => this.log(line));
+    return runGeneration(
+      generateSelectorMethod,
+      flags,
+      this.jsonEnabled() ? undefined : (line): void => this.log(line)
+    );
   }
 }

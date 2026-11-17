@@ -33,7 +33,9 @@ const flagFor = (key: string): string[] => (key === 'flavor' ? ['at4dx', 'fflib'
 describe('core descriptor ↔ CLI flag parity', () => {
   it('has one descriptor for every command in the snapshot', () => {
     const snapshot = JSON.parse(readFileSync('command-snapshot.json', 'utf8')) as Array<{ command: string }>;
-    expect(commandDescriptors.map(({ cliId }) => cliId).sort()).to.deep.equal(snapshot.map(({ command }) => command).sort());
+    expect(commandDescriptors.map(({ cliId }) => cliId).sort()).to.deep.equal(
+      snapshot.map(({ command }) => command).sort()
+    );
     expect(Object.keys(commands).sort()).to.deep.equal(snapshot.map(({ command }) => command).sort());
   });
 

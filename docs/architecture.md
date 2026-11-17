@@ -7,16 +7,16 @@ The APX plugin pins `@syntax-syllogism/apx-core` to exactly `0.3.0`. Each comman
 
 ## Where changes belong
 
-| Area | Owner |
-| --- | --- |
-| Use cases (`plan`/`apply`, `run`), option schemas and validation messages, and renderers for generation results and the dead-code report | `apx-core` |
-| Describe conversion, naming, path layout, plan builders, templates, generation engine, and generation model types | `apx-core` |
-| Output-base and API-version helpers, shared defaults and validators | `apx-core` |
-| Class inventory, binding scans, dependency graph, entry-point detection, classification, and destructive manifest rendering/writing | `apx-core` |
-| Flag → option mapping, connection selection, dry-run mapping, and CLI output routing | `src/adapters/` and `src/commands/apx/` |
-| Salesforce CLI flags and message loading | `src/aep/flags.ts` and `messages/` |
-| Interactive input, confirmation, TTY checks, and CLI required-input checks | `src/aep/prompting.ts` and `src/aep/commandSupport.ts` |
-| Core error translation and compatibility wrappers | `src/aep/apxCommand.ts` and `src/aep/errors.ts` |
+| Area                                                                                                                                     | Owner                                                  |
+| ---------------------------------------------------------------------------------------------------------------------------------------- | ------------------------------------------------------ |
+| Use cases (`plan`/`apply`, `run`), option schemas and validation messages, and renderers for generation results and the dead-code report | `apx-core`                                             |
+| Describe conversion, naming, path layout, plan builders, templates, generation engine, and generation model types                        | `apx-core`                                             |
+| Output-base and API-version helpers, shared defaults and validators                                                                      | `apx-core`                                             |
+| Class inventory, binding scans, dependency graph, entry-point detection, classification, and destructive manifest rendering/writing      | `apx-core`                                             |
+| Flag → option mapping, connection selection, dry-run mapping, and CLI output routing                                                     | `src/adapters/` and `src/commands/apx/`                |
+| Salesforce CLI flags and message loading                                                                                                 | `src/aep/flags.ts` and `messages/`                     |
+| Interactive input, confirmation, TTY checks, and CLI required-input checks                                                               | `src/aep/prompting.ts` and `src/aep/commandSupport.ts` |
+| Core error translation and compatibility wrappers                                                                                        | `src/aep/apxCommand.ts` and `src/aep/errors.ts`        |
 
 The former plugin directories `src/aep/{describe,engine,model,naming,paths,plan,templates}` and `src/dead/` have been removed. Change shared behavior in core, release it, and deliberately upgrade the plugin's exact dependency pin and lockfile. The core package's README describes its public exports; templates are internal to core.
 

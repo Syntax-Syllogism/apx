@@ -13,7 +13,7 @@ Use Node.js 22 or later: the shared `apx-core` 0.3.0 dependency requires it.
 sf plugins install @syntax-syllogism/apx@x.y.z
 ```
 
-Or build from source (see [Contributing](https://github.com/Syntax-Syllogism/apx/blob/v0.4.0/README.md#contributing)):
+Or build from source (see [Contributing](https://github.com/Syntax-Syllogism/apx/blob/v0.4.1/README.md#contributing)):
 
 ```bash
 git clone git@github.com:jprichter/apx
@@ -84,6 +84,6 @@ See [Offline domain-process generation](command-details.md#offline-domain-proces
 
 ## Next steps
 
-* [Command details](command-details.md): flavors, naming and prefixes, binding sequence, domain-process metadata, and dry-run and overwrite behavior.
-* [Dead-code analysis](dead-code.md): find classes nothing references.
-* Every flag: the [Commands](https://github.com/Syntax-Syllogism/apx/blob/v0.4.0/README.md#commands) section of the README, or `--help` on any command.
+- [Command details](command-details.md): flavors, naming and prefixes, binding sequence, domain-process metadata, and dry-run and overwrite behavior.
+- [Dead-code analysis](dead-code.md): find classes nothing references.
+- Every flag: the [Commands](https://github.com/Syntax-Syllogism/apx/blob/v0.4.1/README.md#commands) section of the README, or `--help` on any command.

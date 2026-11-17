@@ -1,9 +1,4 @@
-import {
-  dead,
-  renderDeadCodeReport,
-  resolveOutputBase,
-  type DeadCodeResult,
-} from '@syntax-syllogism/apx-core';
+import { dead, renderDeadCodeReport, resolveOutputBase, type DeadCodeResult } from '@syntax-syllogism/apx-core';
 import { Messages } from '@salesforce/core';
 import { ApxCommand } from '../../aep/apxCommand.js';
 import { parseOptionsForCli, writeDeadCodeManifestForCli } from '../../aep/errors.js';

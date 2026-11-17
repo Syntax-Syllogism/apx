@@ -12,11 +12,18 @@ import { toOptions } from './options.js';
 type GenerationUseCase<O> = {
   descriptor: CommandDescriptor & { optionsSchema: { parse(input: unknown): O } };
   plan(conn: Connection | undefined, options: O): Promise<GenerationPreview>;
-  apply(conn: Connection | undefined, preview: GenerationPreview, ctx?: GenerationApplyContext): Promise<AepCommandResult>;
+  apply(
+    conn: Connection | undefined,
+    preview: GenerationPreview,
+    ctx?: GenerationApplyContext
+  ): Promise<AepCommandResult>;
 };
 
 /** Connect only when the use case can use an org; service skips auth when --api-version is explicit. */
-const connectionFor = async (descriptor: CommandDescriptor, flags: Record<string, unknown>): Promise<Connection | undefined> => {
+const connectionFor = async (
+  descriptor: CommandDescriptor,
+  flags: Record<string, unknown>
+): Promise<Connection | undefined> => {
   const org = flags['target-org'] as Org | undefined;
   const apiVersion = flags['api-version'] as string | undefined;
   if (descriptor.requiresOrg === 'none' || !org) return undefined;

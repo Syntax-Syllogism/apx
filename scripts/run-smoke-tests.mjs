@@ -14,7 +14,9 @@ const assumeYes = args.includes('--yes');
 const runId = timestamp();
 const commandsPath = getOption('--commands');
 if (!commandsPath) {
-  console.error('Usage: node scripts/run-smoke-tests.mjs --commands <commands.md> [--project-dir <sfdx-project>] [--yes]');
+  console.error(
+    'Usage: node scripts/run-smoke-tests.mjs --commands <commands.md> [--project-dir <sfdx-project>] [--yes]'
+  );
   process.exit(1);
 }
 const commandsFile = resolve(commandsPath);
@@ -29,7 +31,10 @@ function getOption(name, fallback) {
 }
 
 function timestamp() {
-  return new Date().toISOString().replaceAll(':', '-').replace(/\.\d{3}Z$/, 'Z');
+  return new Date()
+    .toISOString()
+    .replaceAll(':', '-')
+    .replace(/\.\d{3}Z$/, 'Z');
 }
 
 function extractCommands(markdown) {
@@ -60,9 +65,7 @@ function inferCheck(command) {
 }
 
 function splitArguments(value) {
-  return [...value.matchAll(/(?:[^\s"']+|"[^"]*"|'[^']*')+/g)].map((match) =>
-    match[0].replace(/^(['"])(.*)\1$/, '$2')
-  );
+  return [...value.matchAll(/(?:[^\s"']+|"[^"]*"|'[^']*')+/g)].map((match) => match[0].replace(/^(['"])(.*)\1$/, '$2'));
 }
 
 function runCommand(command) {
@@ -98,7 +101,7 @@ async function askYesNo(rl, question) {
 }
 
 function markdownDetails(value) {
-  return value ? `\n\n\`\`\`text\n${value.trim().replaceAll('```', '\`\`\\`')}\n\`\`\`` : '';
+  return value ? `\n\n\`\`\`text\n${value.trim().replaceAll('```', '``\\`')}\n\`\`\`` : '';
 }
 
 async function validateProject() {

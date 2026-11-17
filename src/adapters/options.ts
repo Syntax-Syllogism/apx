@@ -17,9 +17,13 @@ export const toOptions = (descriptor: CommandDescriptor, flags: Record<string, u
     options.flavor = resolveFlavor(flavorFlags);
   }
   if (descriptor.id === 'generate-selector-field-injection') {
-    options.fields = typeof flags.fields === 'string'
-      ? flags.fields.split(',').map((field) => field.trim()).filter(Boolean)
-      : [];
+    options.fields =
+      typeof flags.fields === 'string'
+        ? flags.fields
+            .split(',')
+            .map((field) => field.trim())
+            .filter(Boolean)
+        : [];
   }
   // The CLI action default predates the shared process schema's criteria default.
   if (descriptor.id === 'generate-action') options.order = flags.order ?? '10.2';
